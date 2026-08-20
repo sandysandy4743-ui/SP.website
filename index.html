@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 
 <head>
     <meta charset="UTF-8">
@@ -8,28 +8,21 @@
           content="width=device-width, initial-scale=1.0">
 
     <meta name="description"
-          content="GameZone - Play Free Games">
+          content="GameZone - Play Free Games!">
 
     <title>GameZone - Play Free Games!</title>
 
-    <style>
 
-        /* =========================
-           BASIC PAGE
-        ========================== */
+    <style>
 
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: sans-serif;
             background: #f7f7f7;
             color: #333;
             text-align: center;
         }
 
-
-        /* =========================
-           HEADER
-        ========================== */
 
         header {
             background: #1e293b;
@@ -40,28 +33,20 @@
         }
 
 
-        /* =========================
-           MAIN CONTAINER
-        ========================== */
-
         .container {
             max-width: 900px;
             margin: 20px auto;
-            padding: 20px;
+            padding: 15px;
         }
 
-
-        /* =========================
-           GAME FRAME
-        ========================== */
 
         .game-frame {
             position: relative;
             width: 100%;
             height: 500px;
-            background: #000;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
+            background: #000;
         }
 
 
@@ -72,110 +57,49 @@
         }
 
 
-        /* =========================
-           POPULAR GAMES
-        ========================== */
-
-        .popular-games {
-            margin-top: 30px;
-        }
-
-
-        .popular-games h2 {
-            color: #1e293b;
-        }
-
-
-        .game-grid {
+        .grid {
             display: grid;
             grid-template-columns:
-                repeat(auto-fit, minmax(220px, 1fr));
-
-            gap: 20px;
+                repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
             margin-top: 20px;
         }
 
 
-        /* =========================
-           GAME CARD
-        ========================== */
-
-        .game-card {
+        .card {
             background: #ffffff;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
 
             box-shadow:
                 0 2px 8px rgba(0, 0, 0, 0.15);
-
-            transition: transform 0.2s;
         }
 
 
-        .game-card:hover {
-            transform: translateY(-5px);
-        }
-
-
-        .game-card img {
+        .card img {
             width: 100%;
-            height: 150px;
+            height: 140px;
             object-fit: cover;
-            display: block;
         }
 
 
-        .game-card h3 {
-            margin: 15px 10px 10px;
+        .card h3 {
+            margin: 12px 10px 5px;
             color: #1e293b;
         }
 
 
-        .game-card p {
-            padding: 0 15px;
-            color: #666;
-            font-size: 14px;
+        .card p {
+            margin: 5px 10px 15px;
+            color: #555;
         }
 
-
-        /* =========================
-           PLAY BUTTON
-        ========================== */
-
-        .play-button {
-            display: inline-block;
-
-            margin: 10px 0 15px;
-            padding: 10px 20px;
-
-            background: #1e293b;
-            color: #ffffff;
-
-            text-decoration: none;
-            border-radius: 6px;
-
-            font-weight: bold;
-        }
-
-
-        .play-button:hover {
-            background: #38bdf8;
-            color: #ffffff;
-        }
-
-
-        /* =========================
-           GAME INFORMATION
-        ========================== */
 
         .info {
             background: #ffffff;
-
-            margin-top: 30px;
-            padding: 20px;
-
-            border-radius: 10px;
-
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
             text-align: left;
 
             box-shadow:
@@ -194,37 +118,18 @@
         }
 
 
-        .info ul {
-            padding-left: 20px;
-        }
-
-
-        .info li {
-            margin-bottom: 8px;
-        }
-
-
-        /* =========================
-           FOOTER
-        ========================== */
-
         footer {
             margin-top: 30px;
-
             padding: 15px;
-
             background: #1e293b;
             color: #94a3b8;
-
             font-size: 14px;
         }
 
 
         footer a {
             color: #38bdf8;
-
             text-decoration: none;
-
             margin: 0 5px;
         }
 
@@ -233,232 +138,103 @@
             text-decoration: underline;
         }
 
-
-        /* =========================
-           MOBILE SCREEN
-        ========================== */
-
-        @media (max-width: 600px) {
-
-            header {
-                font-size: 18px;
-            }
-
-            .container {
-                padding: 10px;
-            }
-
-            .game-frame {
-                height: 350px;
-            }
-
-            .game-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
     </style>
+
 </head>
 
 
 <body>
 
 
-    <!-- =========================
-         HEADER
-    ========================== -->
-
     <header>
         🎮 GameZone - Play Free Games!
     </header>
 
 
-
-    <!-- =========================
-         MAIN CONTENT
-    ========================== -->
-
     <div class="container">
-
-
-        <!-- GAME TITLE -->
 
         <h2>Master Gameplay</h2>
 
 
-        <!-- =========================
-             GAME FRAME
-        ========================== -->
-
         <div class="game-frame">
 
             <iframe
+                id="player"
                 src="about:blank"
-                title="Game"
+                title="Game Player"
                 allowfullscreen>
             </iframe>
 
         </div>
 
 
+        <div class="grid">
 
-        <!-- =========================
-             POPULAR GAMES
-        ========================== -->
+            <div class="card">
 
-        <section class="popular-games">
+                <img
+                    src="https://via.placeholder.com/400x200"
+                    alt="Game">
 
-            <h2>Popular Games</h2>
+                <h3>Game 1</h3>
 
-
-            <div class="game-grid">
-
-
-                <!-- GAME 1 -->
-
-                <div class="game-card">
-
-                    <img
-                        src="https://via.placeholder.com/400x200"
-                        alt="Game 1">
-
-                    <h3>Master Adventure</h3>
-
-                    <p>
-                        Play this exciting adventure game.
-                    </p>
-
-                    <a
-                        href="#"
-                        class="play-button">
-                        Play Now
-                    </a>
-
-                </div>
-
-
-
-                <!-- GAME 2 -->
-
-                <div class="game-card">
-
-                    <img
-                        src="https://via.placeholder.com/400x200"
-                        alt="Game 2">
-
-                    <h3>Super Racing</h3>
-
-                    <p>
-                        Race your way to victory.
-                    </p>
-
-                    <a
-                        href="#"
-                        class="play-button">
-                        Play Now
-                    </a>
-
-                </div>
-
-
-
-                <!-- GAME 3 -->
-
-                <div class="game-card">
-
-                    <img
-                        src="https://via.placeholder.com/400x200"
-                        alt="Game 3">
-
-                    <h3>Action Battle</h3>
-
-                    <p>
-                        Fight enemies and complete levels.
-                    </p>
-
-                    <a
-                        href="#"
-                        class="play-button">
-                        Play Now
-                    </a>
-
-                </div>
-
-
-
-                <!-- GAME 4 -->
-
-                <div class="game-card">
-
-                    <img
-                        src="https://via.placeholder.com/400x200"
-                        alt="Game 4">
-
-                    <h3>Space Mission</h3>
-
-                    <p>
-                        Explore space and complete missions.
-                    </p>
-
-                    <a
-                        href="#"
-                        class="play-button">
-                        Play Now
-                    </a>
-
-                </div>
-
+                <p>
+                    Play this game now!
+                </p>
 
             </div>
 
-        </section>
+
+            <div class="card">
+
+                <img
+                    src="https://via.placeholder.com/400x200"
+                    alt="Game">
+
+                <h3>Game 2</h3>
+
+                <p>
+                    Play this game now!
+                </p>
+
+            </div>
 
 
+            <div class="card">
 
-        <!-- =========================
-             HOW TO PLAY
-        ========================== -->
+                <img
+                    src="https://via.placeholder.com/400x200"
+                    alt="Game">
+
+                <h3>Game 3</h3>
+
+                <p>
+                    Play this game now!
+                </p>
+
+            </div>
+
+        </div>
+
 
         <div class="info">
 
             <h3>How to Play</h3>
 
             <p>
-                Choose a game and click the
-                "Play Now" button to start playing.
+                Choose a game and start playing.
             </p>
 
-            <ul>
-
-                <li>
-                    Use the game controls to move
-                    your character.
-                </li>
-
-                <li>
-                    Complete the missions and levels.
-                </li>
-
-                <li>
-                    Avoid enemies and obstacles.
-                </li>
-
-                <li>
-                    Have fun and enjoy the game!
-                </li>
-
-            </ul>
+            <p>
+                Click or tap the game controls
+                to move your character and
+                complete the challenges.
+            </p>
 
         </div>
 
-
     </div>
 
-
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
 
     <footer>
 
@@ -467,23 +243,9 @@
         </p>
 
         <p>
-
-            <a href="#">
-                Home
-            </a>
-
-            |
-
-            <a href="#">
-                Privacy
-            </a>
-
-            |
-
-            <a href="#">
-                Contact Us
-            </a>
-
+            <a href="#">Home</a> |
+            <a href="#">Privacy</a> |
+            <a href="#">Contact Us</a>
         </p>
 
     </footer>
