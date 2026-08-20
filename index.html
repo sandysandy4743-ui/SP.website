@@ -1,1429 +1,568 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
+<title>GameZone - 100 Free Games</title>
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    <title>GameZone - 100 Free Online Games</title>
+body {
+    font-family: Arial, sans-serif;
+    background: #0b1020;
+    color: white;
+}
 
+/* HEADER */
+header {
+    padding: 25px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #111936, #18264d);
+    border-bottom: 2px solid #263766;
+}
 
-    <style>
+.logo-title {
+    font-size: 38px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
 
-        * {
-            box-sizing: border-box;
-        }
+.logo-title span {
+    color: #00e5ff;
+}
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #222;
-        }
+.subtitle {
+    margin-top: 8px;
+    color: #aeb9d6;
+    font-size: 15px;
+}
 
-        header {
-            background: #1e293b;
-            color: white;
-            text-align: center;
-            padding: 25px 15px;
-        }
+/* SEARCH */
+.search-area {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
 
-        header h1 {
-            margin: 0 0 8px;
-            color: #38bdf8;
-        }
+#searchBox {
+    width: min(600px, 90%);
+    padding: 15px 20px;
+    border-radius: 30px;
+    border: 2px solid #334579;
+    outline: none;
+    background: #121a32;
+    color: white;
+    font-size: 16px;
+}
 
-        header p {
-            margin: 0;
-            color: #cbd5e1;
-        }
+#searchBox:focus {
+    border-color: #00e5ff;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 25px 15px;
-        }
+/* CATEGORY BUTTONS */
+.categories {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0 20px 25px;
+}
 
-        .search-box {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 25px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-        }
+.category-btn {
+    border: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    background: #1a2545;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
 
-        .game-grid {
-            display: grid;
-            grid-template-columns:
-                repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
+.category-btn:hover,
+.category-btn.active {
+    background: #00bcd4;
+    color: #001016;
+}
 
-        .game-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow:
-                0 3px 12px rgba(0,0,0,0.12);
-            transition: 0.2s;
-        }
+/* GAME GRID */
+.game-container {
+    width: min(1400px, 95%);
+    margin: auto;
+    padding: 10px 0 40px;
 
-        .game-card:hover {
-            transform: translateY(-5px);
-        }
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 18px;
+}
 
-        .game-card img {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
-            display: block;
-        }
+/* GAME CARD */
+.game-card {
+    background: #121a32;
+    border: 1px solid #27365f;
+    border-radius: 18px;
+    padding: 15px;
+    transition: 0.25s;
+    overflow: hidden;
+}
 
-        .game-content {
-            padding: 15px;
-            text-align: center;
-        }
+.game-card:hover {
+    transform: translateY(-6px);
+    border-color: #00e5ff;
+    box-shadow: 0 10px 30px rgba(0, 229, 255, 0.12);
+}
 
-        .game-content h3 {
-            margin: 5px 0 12px;
-            font-size: 18px;
-        }
+/* GAME LOGO */
+.game-logo {
+    width: 100%;
+    height: 150px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #202c4e;
 
-        .play-button {
-            display: inline-block;
-            padding: 10px 18px;
-            background: #1e293b;
-            color: white;
-            text-decoration: none;
-            border-radius: 7px;
-            font-weight: bold;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        .play-button:hover {
-            background: #38bdf8;
-        }
+    margin-bottom: 12px;
+}
 
-        footer {
-            margin-top: 40px;
-            padding: 20px;
-            text-align: center;
-            background: #1e293b;
-            color: #cbd5e1;
-        }
+.game-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-        @media (max-width: 600px) {
+/* GAME TEXT */
+.game-name {
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
 
-            .game-grid {
-                grid-template-columns:
-                    repeat(2, 1fr);
-                gap: 10px;
-            }
+.game-category {
+    color: #8e9abd;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
 
-            .game-card img {
-                height: 110px;
-            }
+/* PLAY BUTTON */
+.play-btn {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 10px;
+    background: #00c853;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+}
 
-            .game-content {
-                padding: 10px;
-            }
+.play-btn:hover {
+    background: #00a844;
+}
 
-            .game-content h3 {
-                font-size: 14px;
-            }
+/* NO RESULT */
+.no-result {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+    color: #aeb9d6;
+    font-size: 20px;
+}
 
-            .play-button {
-                padding: 8px 12px;
-                font-size: 13px;
-            }
-        }
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #080d1b;
+    color: #7f8baa;
+}
 
-    </style>
+/* MOBILE */
+@media (max-width: 600px) {
 
+    .logo-title {
+        font-size: 28px;
+    }
+
+    .game-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .game-logo {
+        height: 110px;
+    }
+
+    .game-name {
+        font-size: 14px;
+    }
+
+    .play-btn {
+        font-size: 13px;
+    }
+}
+</style>
 </head>
-
 
 <body>
 
-
 <header>
 
-    <h1>🎮 GameZone</h1>
+    <div class="logo-title">
+        🎮 Game<span>Zone</span>
+    </div>
 
-    <p>
-        100 Free Online Games
-    </p>
+    <div class="subtitle">
+        100 Free Games • Play Online
+    </div>
 
 </header>
 
 
-<div class="container">
-
+<div class="search-area">
 
     <input
         type="text"
-        id="search"
-        class="search-box"
-        placeholder="🔎 Search games..."
-        onkeyup="searchGames()"
+        id="searchBox"
+        placeholder="🔍 Search games..."
     >
-
-
-    <div class="game-grid"
-         id="gameGrid">
-
-
-        <!-- 01 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Moto+X3M"
-                 alt="Moto X3M">
-            <div class="game-content">
-                <h3>Moto X3M</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/game/moto-x3m"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 02 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Moto+X3M+Winter"
-                 alt="Moto X3M Winter">
-            <div class="game-content">
-                <h3>Moto X3M Winter</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/game/moto-x3m-4"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 03 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Moto+X3M+Spooky"
-                 alt="Moto X3M Spooky Land">
-            <div class="game-content">
-                <h3>Moto X3M Spooky Land</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/game/moto-x3m-spooky-land"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 04 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=99+Nights"
-                 alt="99 Nights">
-            <div class="game-content">
-                <h3>99 Nights</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=99%20Nights"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 05 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Fortzone+Battle"
-                 alt="Fortzone Battle Royale">
-            <div class="game-content">
-                <h3>Fortzone Battle Royale</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Fortzone%20Battle%20Royale"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 06 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Stickman+Clash"
-                 alt="Stickman Clash">
-            <div class="game-content">
-                <h3>Stickman Clash</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Stickman%20Clash"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 07 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Iron+Legion"
-                 alt="Iron Legion">
-            <div class="game-content">
-                <h3>Iron Legion</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Iron%20Legion"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 08 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Bloons+TD+3"
-                 alt="Bloons Tower Defense 3">
-            <div class="game-content">
-                <h3>Bloons Tower Defense 3</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Bloons%20Tower%20Defense%203"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 09 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Ships+3D"
-                 alt="Ships 3D">
-            <div class="game-content">
-                <h3>Ships 3D</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Ships%203D"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 10 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Stickman+Kombat"
-                 alt="Stickman Kombat 2D">
-            <div class="game-content">
-                <h3>Stickman Kombat 2D</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Stickman%20Kombat%202D"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 11 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Build+and+Crush"
-                 alt="Build and Crush">
-            <div class="game-content">
-                <h3>Build and Crush</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Build%20and%20Crush"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 12 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Defender+Idle"
-                 alt="Defender Idle 2">
-            <div class="game-content">
-                <h3>Defender Idle 2</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Defender%20Idle%202"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 13 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=House+of+Hazards"
-                 alt="House of Hazards">
-            <div class="game-content">
-                <h3>House of Hazards</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=House%20of%20Hazards"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 14 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Stick+War"
-                 alt="Stick War">
-            <div class="game-content">
-                <h3>Stick War</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Stick%20War"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 15 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Getaway+Shootout"
-                 alt="Getaway Shootout">
-            <div class="game-content">
-                <h3>Getaway Shootout</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Getaway%20Shootout"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 16 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Amazing+Rope+Police"
-                 alt="Amazing Strange Rope Police">
-            <div class="game-content">
-                <h3>Amazing Strange Rope Police</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Amazing%20Strange%20Rope%20Police"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 17 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=World+Z+Defense"
-                 alt="World Z Defense">
-            <div class="game-content">
-                <h3>World Z Defense</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=World%20Z%20Defense"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 18 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=War+the+Knights"
-                 alt="War the Knights">
-            <div class="game-content">
-                <h3>War the Knights</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=War%20the%20Knights"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 19 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Ragdoll+Archers"
-                 alt="Ragdoll Archers">
-            <div class="game-content">
-                <h3>Ragdoll Archers</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Ragdoll%20Archers"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 20 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Stickman+Rebirth"
-                 alt="Stickman Rebirth">
-            <div class="game-content">
-                <h3>Stickman Rebirth</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Stickman%20Rebirth"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 21 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Survive+Disasters"
-                 alt="Survive the Disasters">
-            <div class="game-content">
-                <h3>Survive the Disasters</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Survive%20the%20Disasters"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 22 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Bank+Heist"
-                 alt="Bank Heist">
-            <div class="game-content">
-                <h3>Bank Heist</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Bank%20Heist"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 23 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=TimeWarriors"
-                 alt="TimeWarriors">
-            <div class="game-content">
-                <h3>TimeWarriors</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=TimeWarriors"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 24 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Stickman+History"
-                 alt="Stickman History Battle">
-            <div class="game-content">
-                <h3>Stickman History Battle</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Stickman%20History%20Battle"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 25 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Samurai+Shadow"
-                 alt="Samurai's Shadow">
-            <div class="game-content">
-                <h3>Samurai's Shadow</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Samurai%27s%20Shadow"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 26 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Ninja+Parkour"
-                 alt="Ninja Parkour">
-            <div class="game-content">
-                <h3>Ninja Parkour</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Ninja%20Parkour"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 27 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Tank+Arena"
-                 alt="Tanks Arena">
-            <div class="game-content">
-                <h3>Tanks Arena</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Tanks%20Arena"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 28 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Sniper+Challenge"
-                 alt="Sniper Challenge">
-            <div class="game-content">
-                <h3>Sniper Challenge</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Sniper%20Challenge"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 29 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Stickman+Epic"
-                 alt="Stickman Epic">
-            <div class="game-content">
-                <h3>Stickman Epic</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Stickman%20Epic"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 30 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Dragon+Simulator"
-                 alt="Dragon Simulator 3D">
-            <div class="game-content">
-                <h3>Dragon Simulator 3D</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Dragon%20Simulator%203D"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 31 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=House+Escape"
-                 alt="House Escape">
-            <div class="game-content">
-                <h3>House Escape</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=House%20Escape"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 32 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Zombie+Defense"
-                 alt="Zombie Defense">
-            <div class="game-content">
-                <h3>Zombie Defense</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Zombie%20Defense"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 33 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Stickman+Fighter"
-                 alt="Stickman Fighter">
-            <div class="game-content">
-                <h3>Stickman Fighter</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Stickman%20Fighter"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 34 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Tower+Defense"
-                 alt="Tower Defense">
-            <div class="game-content">
-                <h3>Tower Defense</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Tower%20Defense"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 35 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Battle+Arena"
-                 alt="Battle Arena">
-            <div class="game-content">
-                <h3>Battle Arena</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Battle%20Arena"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 36 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Space+Wars"
-                 alt="Space Wars">
-            <div class="game-content">
-                <h3>Space Wars</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Space%20Wars"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 37 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Car+Racing"
-                 alt="Car Racing">
-            <div class="game-content">
-                <h3>Car Racing</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Car%20Racing"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 38 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Traffic+Racer"
-                 alt="Traffic Racer">
-            <div class="game-content">
-                <h3>Traffic Racer</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Traffic%20Racer"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 39 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Pool"
-                 alt="Pool">
-            <div class="game-content">
-                <h3>Pool</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Pool"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 40 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Basketball"
-                 alt="Basketball">
-            <div class="game-content">
-                <h3>Basketball</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Basketball"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 41 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Football"
-                 alt="Football">
-            <div class="game-content">
-                <h3>Football</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Football"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 42 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Soccer+Masters"
-                 alt="Soccer Masters">
-            <div class="game-content">
-                <h3>Soccer Masters</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Soccer%20Masters"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 43 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Bike+Race"
-                 alt="Bike Race">
-            <div class="game-content">
-                <h3>Bike Race</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Bike%20Race"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 44 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Snow+Rider"
-                 alt="Snow Rider">
-            <div class="game-content">
-                <h3>Snow Rider</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Snow%20Rider"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 45 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Eggy+Car"
-                 alt="Eggy Car">
-            <div class="game-content">
-                <h3>Eggy Car</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/search?query=Eggy%20Car"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 46 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Platform+Game"
-                 alt="Platform Game">
-            <div class="game-content">
-                <h3>Platform Game</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/c/platform"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 47 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Action+Game"
-                 alt="Action Game">
-            <div class="game-content">
-                <h3>Action Game</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/c/action"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 48 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Adventure"
-                 alt="Adventure Game">
-            <div class="game-content">
-                <h3>Adventure Game</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/c/adventure"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 49 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Driving"
-                 alt="Driving Game">
-            <div class="game-content">
-                <h3>Driving Game</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/c/driving"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 50 -->
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Sports"
-                 alt="Sports Game">
-            <div class="game-content">
-                <h3>Sports Game</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com/c/sports"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-
-        <!-- 51 - 100 -->
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+51"
-                 alt="Game 51">
-            <div class="game-content">
-                <h3>Game 51</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+52"
-                 alt="Game 52">
-            <div class="game-content">
-                <h3>Game 52</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+53"
-                 alt="Game 53">
-            <div class="game-content">
-                <h3>Game 53</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+54"
-                 alt="Game 54">
-            <div class="game-content">
-                <h3>Game 54</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+55"
-                 alt="Game 55">
-            <div class="game-content">
-                <h3>Game 55</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+56"
-                 alt="Game 56">
-            <div class="game-content">
-                <h3>Game 56</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+57"
-                 alt="Game 57">
-            <div class="game-content">
-                <h3>Game 57</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+58"
-                 alt="Game 58">
-            <div class="game-content">
-                <h3>Game 58</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+59"
-                 alt="Game 59">
-            <div class="game-content">
-                <h3>Game 59</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+60"
-                 alt="Game 60">
-            <div class="game-content">
-                <h3>Game 60</h3>
-                <a class="play-button"
-                   href="https://www.crazygames.com"
-                   target="_blank">
-                    Play Now
-                </a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+61"
-                 alt="Game 61">
-            <div class="game-content">
-                <h3>Game 61</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+62" alt="Game 62">
-            <div class="game-content">
-                <h3>Game 62</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+63" alt="Game 63">
-            <div class="game-content">
-                <h3>Game 63</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+64" alt="Game 64">
-            <div class="game-content">
-                <h3>Game 64</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+65" alt="Game 65">
-            <div class="game-content">
-                <h3>Game 65</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+66" alt="Game 66">
-            <div class="game-content">
-                <h3>Game 66</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+67" alt="Game 67">
-            <div class="game-content">
-                <h3>Game 67</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+68" alt="Game 68">
-            <div class="game-content">
-                <h3>Game 68</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+69" alt="Game 69">
-            <div class="game-content">
-                <h3>Game 69</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+70" alt="Game 70">
-            <div class="game-content">
-                <h3>Game 70</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+71" alt="Game 71">
-            <div class="game-content">
-                <h3>Game 71</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+72" alt="Game 72">
-            <div class="game-content">
-                <h3>Game 72</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+73" alt="Game 73">
-            <div class="game-content">
-                <h3>Game 73</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+74" alt="Game 74">
-            <div class="game-content">
-                <h3>Game 74</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+75" alt="Game 75">
-            <div class="game-content">
-                <h3>Game 75</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+76" alt="Game 76">
-            <div class="game-content">
-                <h3>Game 76</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+77" alt="Game 77">
-            <div class="game-content">
-                <h3>Game 77</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+78" alt="Game 78">
-            <div class="game-content">
-                <h3>Game 78</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+79" alt="Game 79">
-            <div class="game-content">
-                <h3>Game 79</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+80" alt="Game 80">
-            <div class="game-content">
-                <h3>Game 80</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+81" alt="Game 81">
-            <div class="game-content">
-                <h3>Game 81</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+82" alt="Game 82">
-            <div class="game-content">
-                <h3>Game 82</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+83" alt="Game 83">
-            <div class="game-content">
-                <h3>Game 83</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+84" alt="Game 84">
-            <div class="game-content">
-                <h3>Game 84</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+85" alt="Game 85">
-            <div class="game-content">
-                <h3>Game 85</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+86" alt="Game 86">
-            <div class="game-content">
-                <h3>Game 86</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+87" alt="Game 87">
-            <div class="game-content">
-                <h3>Game 87</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+88" alt="Game 88">
-            <div class="game-content">
-                <h3>Game 88</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+89" alt="Game 89">
-            <div class="game-content">
-                <h3>Game 89</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+90" alt="Game 90">
-            <div class="game-content">
-                <h3>Game 90</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+91" alt="Game 91">
-            <div class="game-content">
-                <h3>Game 91</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+92" alt="Game 92">
-            <div class="game-content">
-                <h3>Game 92</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+93" alt="Game 93">
-            <div class="game-content">
-                <h3>Game 93</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+94" alt="Game 94">
-            <div class="game-content">
-                <h3>Game 94</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+95" alt="Game 95">
-            <div class="game-content">
-                <h3>Game 95</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+96" alt="Game 96">
-            <div class="game-content">
-                <h3>Game 96</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+97" alt="Game 97">
-            <div class="game-content">
-                <h3>Game 97</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+98" alt="Game 98">
-            <div class="game-content">
-                <h3>Game 98</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+99" alt="Game 99">
-            <div class="game-content">
-                <h3>Game 99</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-        <div class="game-card">
-            <img src="https://placehold.co/600x400?text=Game+100" alt="Game 100">
-            <div class="game-content">
-                <h3>Game 100</h3>
-                <a class="play-button" href="https://www.crazygames.com" target="_blank">Play Now</a>
-            </div>
-        </div>
-
-
-    </div>
 
 </div>
 
 
+<div class="categories">
+
+    <button class="category-btn active" onclick="filterCategory('All', this)">
+        All
+    </button>
+
+    <button class="category-btn" onclick="filterCategory('Action', this)">
+        Action
+    </button>
+
+    <button class="category-btn" onclick="filterCategory('Racing', this)">
+        Racing
+    </button>
+
+    <button class="category-btn" onclick="filterCategory('Puzzle', this)">
+        Puzzle
+    </button>
+
+    <button class="category-btn" onclick="filterCategory('Sports', this)">
+        Sports
+    </button>
+
+    <button class="category-btn" onclick="filterCategory('Arcade', this)">
+        Arcade
+    </button>
+
+</div>
+
+
+<main class="game-container" id="gameContainer"></main>
+
+
 <footer>
-
-    © 2026 GameZone - 100 Free Online Games
-
+    © 2026 GameZone • 100 Games
 </footer>
 
 
 <script>
 
-    function searchGames() {
+/* =========================================
+   100 GAMES
+========================================= */
 
-        const input =
-            document.getElementById("search")
-                .value
-                .toLowerCase();
+const games = [
 
-        const cards =
-            document.querySelectorAll(".game-card");
+    {name:"Subway Runner", category:"Arcade"},
+    {name:"Speed Racer", category:"Racing"},
+    {name:"Ninja Attack", category:"Action"},
+    {name:"Jungle Adventure", category:"Action"},
+    {name:"Space Shooter", category:"Action"},
+    {name:"Football Challenge", category:"Sports"},
+    {name:"Basketball Stars", category:"Sports"},
+    {name:"Car Drift", category:"Racing"},
+    {name:"Puzzle Master", category:"Puzzle"},
+    {name:"Block Blast", category:"Puzzle"},
 
-        cards.forEach(function(card) {
+    {name:"Zombie Hunter", category:"Action"},
+    {name:"Monster Run", category:"Arcade"},
+    {name:"City Driver", category:"Racing"},
+    {name:"Bike Racing", category:"Racing"},
+    {name:"Super Soccer", category:"Sports"},
+    {name:"Tennis Pro", category:"Sports"},
+    {name:"Chess Master", category:"Puzzle"},
+    {name:"Candy Match", category:"Puzzle"},
+    {name:"Bubble Shooter", category:"Arcade"},
+    {name:"Alien Attack", category:"Action"},
 
-            const name =
-                card.querySelector("h3")
-                    .textContent
-                    .toLowerCase();
+    {name:"Highway Racer", category:"Racing"},
+    {name:"Desert Race", category:"Racing"},
+    {name:"Snow Rider", category:"Racing"},
+    {name:"Street Driver", category:"Racing"},
+    {name:"Formula Speed", category:"Racing"},
+    {name:"Drift King", category:"Racing"},
+    {name:"Moto Speed", category:"Racing"},
+    {name:"Traffic Racer", category:"Racing"},
+    {name:"Rocket Race", category:"Racing"},
+    {name:"Offroad Driver", category:"Racing"},
 
-            if (name.includes(input)) {
-                card.style.display = "";
-            } else {
-                card.style.display = "none";
-            }
+    {name:"Ninja Warrior", category:"Action"},
+    {name:"Samurai Fight", category:"Action"},
+    {name:"Robot Battle", category:"Action"},
+    {name:"Dinosaur Attack", category:"Action"},
+    {name:"Dragon Fighter", category:"Action"},
+    {name:"Pirate Battle", category:"Action"},
+    {name:"Space Warrior", category:"Action"},
+    {name:"Hero Quest", category:"Action"},
+    {name:"Monster Fighter", category:"Action"},
+    {name:"Battle Arena", category:"Action"},
 
-        });
+    {name:"Memory Match", category:"Puzzle"},
+    {name:"2048 Master", category:"Puzzle"},
+    {name:"Sudoku", category:"Puzzle"},
+    {name:"Word Puzzle", category:"Puzzle"},
+    {name:"Number Match", category:"Puzzle"},
+    {name:"Jigsaw Puzzle", category:"Puzzle"},
+    {name:"Color Match", category:"Puzzle"},
+    {name:"Maze Runner", category:"Puzzle"},
+    {name:"Brain Test", category:"Puzzle"},
+    {name:"Logic Master", category:"Puzzle"},
 
+    {name:"Penalty Shoot", category:"Sports"},
+    {name:"Cricket Pro", category:"Sports"},
+    {name:"Golf Challenge", category:"Sports"},
+    {name:"Baseball Hit", category:"Sports"},
+    {name:"Boxing Champion", category:"Sports"},
+    {name:"Hockey Stars", category:"Sports"},
+    {name:"Volleyball Pro", category:"Sports"},
+    {name:"Skateboard Hero", category:"Sports"},
+    {name:"Archery Master", category:"Sports"},
+    {name:"Bowling King", category:"Sports"},
+
+    {name:"Flappy Bird Style", category:"Arcade"},
+    {name:"Classic Snake", category:"Arcade"},
+    {name:"Brick Breaker", category:"Arcade"},
+    {name:"Space Invaders", category:"Arcade"},
+    {name:"Pac Runner", category:"Arcade"},
+    {name:"Jump Hero", category:"Arcade"},
+    {name:"Coin Collector", category:"Arcade"},
+    {name:"Fire Jump", category:"Arcade"},
+    {name:"Sky Runner", category:"Arcade"},
+    {name:"Tower Jump", category:"Arcade"},
+
+    {name:"Ocean Adventure", category:"Action"},
+    {name:"Island Survivor", category:"Action"},
+    {name:"Castle Defense", category:"Action"},
+    {name:"Tank Battle", category:"Action"},
+    {name:"Air Fighter", category:"Action"},
+    {name:"Laser Warrior", category:"Action"},
+    {name:"Cyber Hero", category:"Action"},
+    {name:"Robot Runner", category:"Action"},
+    {name:"Fire Dragon", category:"Action"},
+    {name:"Galaxy Battle", category:"Action"},
+
+    {name:"Color Blocks", category:"Puzzle"},
+    {name:"Match 3", category:"Puzzle"},
+    {name:"Tile Master", category:"Puzzle"},
+    {name:"Word Master", category:"Puzzle"},
+    {name:"Connect Dots", category:"Puzzle"},
+    {name:"Escape Room", category:"Puzzle"},
+    {name:"Find The Difference", category:"Puzzle"},
+    {name:"Brain Blocks", category:"Puzzle"},
+    {name:"Math Challenge", category:"Puzzle"},
+    {name:"Puzzle Quest", category:"Puzzle"},
+
+    {name:"Monster Truck", category:"Racing"},
+    {name:"F1 Racing", category:"Racing"},
+    {name:"Super Bike", category:"Racing"},
+    {name:"Police Chase", category:"Racing"},
+    {name:"Speed Boat", category:"Racing"},
+    {name:"Airport Race", category:"Racing"},
+    {name:"Stunt Car", category:"Racing"},
+    {name:"Mega Drift", category:"Racing"},
+    {name:"Road Fury", category:"Racing"},
+    {name:"Ultimate Racer", category:"Racing"}
+
+];
+
+
+/* =========================================
+   GAME LOGO
+========================================= */
+
+function getLogo(game, index) {
+
+    /*
+       ஒவ்வொரு game-க்கும் தனி generated logo.
+       Game name + index பயன்படுத்தப்படுகிறது.
+    */
+
+    const seed = encodeURIComponent(
+        game.name + "-" + index
+    );
+
+    return `https://api.dicebear.com/9.x/initials/svg?seed=${seed}&backgroundType=gradientLinear`;
+}
+
+
+/* =========================================
+   DISPLAY GAMES
+========================================= */
+
+function displayGames(list) {
+
+    const container =
+        document.getElementById("gameContainer");
+
+    container.innerHTML = "";
+
+    if (list.length === 0) {
+
+        container.innerHTML = `
+            <div class="no-result">
+                😔 Game கிடைக்கவில்லை
+            </div>
+        `;
+
+        return;
     }
+
+    list.forEach((game, index) => {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "game-card";
+
+        card.innerHTML = `
+
+            <div class="game-logo">
+
+                <img
+                    src="${getLogo(game, index)}"
+                    alt="${game.name} logo"
+                    loading="lazy"
+                >
+
+            </div>
+
+            <div class="game-name">
+                ${game.name}
+            </div>
+
+            <div class="game-category">
+                ${game.category}
+            </div>
+
+            <button
+                class="play-btn"
+                onclick="playGame('${game.name.replace(/'/g, "\\'")}')"
+            >
+                ▶ Play Now
+            </button>
+
+        `;
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+document
+.getElementById("searchBox")
+.addEventListener("input", function() {
+
+    const searchText =
+        this.value.toLowerCase().trim();
+
+    const filtered =
+        games.filter(game =>
+            game.name
+                .toLowerCase()
+                .includes(searchText)
+        );
+
+    displayGames(filtered);
+
+});
+
+
+/* =========================================
+   CATEGORY FILTER
+========================================= */
+
+function filterCategory(category, button) {
+
+    document
+    .querySelectorAll(".category-btn")
+    .forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    if (category === "All") {
+
+        displayGames(games);
+
+        return;
+    }
+
+    const filtered =
+        games.filter(game =>
+            game.category === category
+        );
+
+    displayGames(filtered);
+}
+
+
+/* =========================================
+   PLAY BUTTON
+========================================= */
+
+function playGame(gameName) {
+
+    /*
+       இங்கே ஒவ்வொரு game-க்கும்
+       தனித்தனி HTML game URL / game file
+       சேர்க்கலாம்.
+    */
+
+    alert(
+        "🎮 " +
+        gameName +
+        "\\n\\nGame loading..."
+    );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+displayGames(games);
 
 </script>
 
-
 </body>
-
 </html>
