@@ -3,32 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>100 ஆன்லைன் கேம்ஸ் போர்ட்டல் 🎮</title>
+    <title>100 அல்டிமேட் கேம்ஸ் போர்ட்டல் 🎮</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #0f172a; color: white; text-align: center; margin: 0; padding: 20px; }
-        h1 { color: #38bdf8; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0b0f19; color: #fff; margin: 0; padding: 20px; text-align: center; }
+        h1 { color: #38bdf8; text-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
         
-        /* கேடஜரி பொத்தான்கள் 🔘 */
-        .filter-btn { background: #1e293b; color: #38bdf8; border: 2px solid #38bdf8; padding: 10px 18px; margin: 5px; border-radius: 20px; cursor: pointer; font-weight: bold; }
-        .filter-btn:hover, .filter-btn.active { background: #38bdf8; color: #0f172a; }
+        /* Category Buttons */
+        .category-container { margin-bottom: 20px; }
+        .filter-btn { background: #1e293b; color: #38bdf8; border: 2px solid #38bdf8; padding: 10px 18px; margin: 4px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .filter-btn:hover, .filter-btn.active { background: #38bdf8; color: #0b0f19; }
+
+        /* Games Grid */
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
+        .game-card { background: #1e293b; border-radius: 12px; padding: 10px; border: 1px solid #334155; transition: 0.3s; }
+        .game-card:hover { transform: translateY(-5px); border-color: #38bdf8; }
+        .game-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; }
+        .game-title { font-size: 0.95rem; margin: 10px 0; color: #f1f5f9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
-        /* கேம்கள் தோன்றும் கிரிட் 🧊 */
-        .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
-        .game-card { background: #1e293b; border-radius: 10px; padding: 10px; border: 1px solid #334155; transition: transform 0.2s; }
-        .game-card:hover { transform: scale(1.03); }
-        .game-card img { width: 100%; height: 110px; object-fit: cover; border-radius: 6px; }
-        
-        /* Play பொத்தான் ▶️ */
-        .play-btn { background: #22c55e; color: white; border: none; padding: 10px; margin-top: 8px; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; font-size: 14px; }
+        /* Play Button */
+        .play-btn { background: #22c55e; color: white; border: none; padding: 8px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; font-size: 0.9rem; }
         .play-btn:hover { background: #16a34a; }
+
+        /* Popup Game Window */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: #1e293b; padding: 10px; border-radius: 12px; width: 90%; height: 85%; position: relative; }
+        .close-btn { position: absolute; top: -12px; right: -12px; background: #ef4444; color: white; border: none; font-size: 16px; font-weight: bold; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; z-index: 1001; }
+        iframe { width: 100%; height: 100%; border: none; border-radius: 8px; }
     </style>
 </head>
 <body>
 
     <h1>🎮 100 ஆன்லைன் கேமிங் போர்ட்டல் 🕹️</h1>
 
-    <!-- கேடஜரி பொத்தான்கள் -->
-    <div>
+    <!-- Categories -->
+    <div class="category-container">
         <button class="filter-btn active" onclick="filterGames('All')">அனைத்தும் (100)</button>
         <button class="filter-btn" onclick="filterGames('Fighting')">Fighting 🥊</button>
         <button class="filter-btn" onclick="filterGames('Adventure')">Adventure 🧗</button>
@@ -36,64 +45,78 @@
         <button class="filter-btn" onclick="filterGames('Puzzles')">Puzzles 🧩</button>
     </div>
 
-    <!-- கேம்கள் தோன்றும் இடம் -->
+    <!-- Games Grid Display -->
     <div class="games-grid" id="gamesContainer"></div>
 
+    <!-- Popup Window for Playing Games -->
+    <div class="modal" id="gameModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeGame()">✕</button>
+            <iframe id="gameIframe" src="" allow="autoplay; payment; fullscreen"></iframe>
+        </div>
+    </div>
+
     <script>
-        const categories = ["Fighting", "Adventure", "Running", "Puzzles"];
-        
-        // ஆன்லைனில் பிழையின்றி இயங்கும் மாதிரி கேம் லிங்க்குகள் 🔗
-        const sampleUrls = [
-            "https://playtictactoe.org/",
-            "https://play2048.co/",
-            "https://freepacman.org/",
-            "https://playsnakegame.net/"
+        // Embed-க்கு அனுமதிக்கப்பட்ட ஆன்லைன் கேம் லிங்க்குகள் (No Error Links)
+        const embedLinks = [
+            "https://html5.gamedistribution.com/694f433f2780415a9f5d165f6cddf177/",
+            "https://html5.gamedistribution.com/8cb3724a0d9b4b0e980a3a4c0cfb6389/",
+            "https://html5.gamedistribution.com/c16b5a3e14df4b378031e428c049d560/",
+            "https://html5.gamedistribution.com/f25ba0ed419541a7b0561578f56191bf/"
         ];
 
+        const categories = ["Fighting", "Adventure", "Running", "Puzzles"];
         const games = [];
 
-        // 100 கேம்களை தானாக உருவாக்க லூப் (Loop) 🔄
+        // 100 கேம்களை உருவாக்கிச் சேர்க்கும் லூப்
         for (let i = 1; i <= 100; i++) {
-            let cat = categories[(i - 1) % 4];
-            let url = sampleUrls[(i - 1) % sampleUrls.length];
+            let catIndex = (i - 1) % 4;
+            let cat = categories[catIndex];
+            let num = Math.ceil(i / 4);
             
             games.push({
                 id: i,
-                name: `${cat} Game ${Math.ceil(i/4)}`,
+                name: `${cat} Game ${num}`,
                 category: cat,
-                logo: `https://dummyimage.com/200x110/1e293b/38bdf8&text=${cat}+Game+${Math.ceil(i/4)}`,
-                url: url
+                logo: `https://dummyimage.com/200x120/1e293b/38bdf8&text=${cat}+${num}`,
+                url: embedLinks[catIndex]
             });
         }
 
         const container = document.getElementById('gamesContainer');
 
-        // கேம்களைத் திரையில் காட்டும் ஃபங்க்ஷன் 🖥️
         function displayGames(list) {
             container.innerHTML = "";
             list.forEach(g => {
                 container.innerHTML += `
                     <div class="game-card">
                         <img src="${g.logo}" alt="${g.name}">
-                        <h4>${g.name}</h4>
+                        <div class="game-title">${g.name}</div>
                         <button class="play-btn" onclick="playGame('${g.url}')">Play ▶</button>
                     </div>
                 `;
             });
         }
 
-        // கேடஜரி ஃபில்டர் ஃபங்க்ஷன் 🔍
         function filterGames(cat) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
             if (cat === 'All') displayGames(games);
             else displayGames(games.filter(g => g.category === cat));
         }
 
-        // எரர் வராமல் கேம் திறக்கும் ஃபங்க்션 🚀
         function playGame(url) {
-            window.open(url, '_blank');
+            document.getElementById('gameIframe').src = url;
+            document.getElementById('gameModal').style.display = 'flex';
         }
 
-        // ஆரம்பத்தில் 100 கேம்களையும் காட்ட
+        function closeGame() {
+            document.getElementById('gameIframe').src = "";
+            document.getElementById('gameModal').style.display = 'none';
+        }
+
+        // ஆரம்பத்தில் 100 கேம்களையும் திரையில் காட்ட
         displayGames(games);
     </script>
 </body>
