@@ -6,24 +6,28 @@
     <title>100 ஆன்லைன் கேம்ஸ் போர்ட்டல் 🎮</title>
     <style>
         body { font-family: Arial, sans-serif; background: #0f172a; color: white; text-align: center; margin: 0; padding: 20px; }
+        h1 { color: #38bdf8; }
+        
+        /* கேடஜரி பொத்தான்கள் 🔘 */
         .filter-btn { background: #1e293b; color: #38bdf8; border: 2px solid #38bdf8; padding: 10px 18px; margin: 5px; border-radius: 20px; cursor: pointer; font-weight: bold; }
         .filter-btn:hover, .filter-btn.active { background: #38bdf8; color: #0f172a; }
+        
+        /* கேம்கள் தோன்றும் கிரிட் 🧊 */
         .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
-        .game-card { background: #1e293b; border-radius: 10px; padding: 10px; border: 1px solid #334155; }
+        .game-card { background: #1e293b; border-radius: 10px; padding: 10px; border: 1px solid #334155; transition: transform 0.2s; }
+        .game-card:hover { transform: scale(1.03); }
         .game-card img { width: 100%; height: 110px; object-fit: cover; border-radius: 6px; }
-        .play-btn { background: #22c55e; color: white; border: none; padding: 8px; margin-top: 8px; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; }
+        
+        /* Play பொத்தான் ▶️ */
+        .play-btn { background: #22c55e; color: white; border: none; padding: 10px; margin-top: 8px; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; font-size: 14px; }
         .play-btn:hover { background: #16a34a; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
-        .modal-content { background: #1e293b; padding: 15px; border-radius: 10px; width: 85%; height: 80%; position: relative; }
-        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 18px; color: #ef4444; cursor: pointer; font-weight: bold; background: #475569; padding: 5px 10px; border-radius: 5px; }
-        iframe { width: 100%; height: calc(100% - 30px); border: none; border-radius: 6px; margin-top: 10px; }
     </style>
 </head>
 <body>
 
     <h1>🎮 100 ஆன்லைன் கேமிங் போர்ட்டல் 🕹️</h1>
 
-    <!-- கேடஜரி பொத்தான்கள் 🔘 -->
+    <!-- கேடஜரி பொத்தான்கள் -->
     <div>
         <button class="filter-btn active" onclick="filterGames('All')">அனைத்தும் (100)</button>
         <button class="filter-btn" onclick="filterGames('Fighting')">Fighting 🥊</button>
@@ -32,36 +36,39 @@
         <button class="filter-btn" onclick="filterGames('Puzzles')">Puzzles 🧩</button>
     </div>
 
-    <!-- கேம்கள் தோன்றும் கிரிட் 🧊 -->
+    <!-- கேம்கள் தோன்றும் இடம் -->
     <div class="games-grid" id="gamesContainer"></div>
-
-    <!-- கேம் விளையாடும் திரை (Modal Popup) 🪟 -->
-    <div class="modal" id="gameModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeGame()">❌ மூடு</span>
-            <iframe id="gameIframe" src=""></iframe>
-        </div>
-    </div>
 
     <script>
         const categories = ["Fighting", "Adventure", "Running", "Puzzles"];
+        
+        // ஆன்லைனில் பிழையின்றி இயங்கும் மாதிரி கேம் லிங்க்குகள் 🔗
+        const sampleUrls = [
+            "https://playtictactoe.org/",
+            "https://play2048.co/",
+            "https://freepacman.org/",
+            "https://playsnakegame.net/"
+        ];
+
         const games = [];
 
-        // 100 கேம்களை உருவாக்கிச் சேர்க்கும் Loop 🔄
+        // 100 கேம்களை தானாக உருவாக்க லூப் (Loop) 🔄
         for (let i = 1; i <= 100; i++) {
             let cat = categories[(i - 1) % 4];
+            let url = sampleUrls[(i - 1) % sampleUrls.length];
             
             games.push({
                 id: i,
                 name: `${cat} Game ${Math.ceil(i/4)}`,
                 category: cat,
                 logo: `https://dummyimage.com/200x110/1e293b/38bdf8&text=${cat}+Game+${Math.ceil(i/4)}`,
-                url: "https://playtictactoe.org/" // ஆன்லைன் கேம் லிங்க்
+                url: url
             });
         }
 
         const container = document.getElementById('gamesContainer');
 
+        // கேம்களைத் திரையில் காட்டும் ஃபங்க்ஷன் 🖥️
         function displayGames(list) {
             container.innerHTML = "";
             list.forEach(g => {
@@ -75,19 +82,15 @@
             });
         }
 
+        // கேடஜரி ஃபில்டர் ஃபங்க்ஷன் 🔍
         function filterGames(cat) {
             if (cat === 'All') displayGames(games);
             else displayGames(games.filter(g => g.category === cat));
         }
 
+        // எரர் வராமல் கேம் திறக்கும் ஃபங்க்션 🚀
         function playGame(url) {
-            document.getElementById('gameIframe').src = url;
-            document.getElementById('gameModal').style.display = 'flex';
-        }
-
-        function closeGame() {
-            document.getElementById('gameIframe').src = "";
-            document.getElementById('gameModal').style.display = 'none';
+            window.open(url, '_blank');
         }
 
         // ஆரம்பத்தில் 100 கேம்களையும் காட்ட
