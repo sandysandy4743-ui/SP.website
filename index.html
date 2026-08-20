@@ -1,680 +1,228 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GameZone — 100 Games</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GameHub 100 - Play Online</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#080d18;color:#fff;min-height:100vh}
-header{padding:28px 18px;text-align:center;background:linear-gradient(135deg,#111a34,#152b4b);border-bottom:1px solid #2a416d}
-h1{font-size:clamp(28px,5vw,46px)} h1 span{color:#00e5ff}
-.subtitle{margin-top:8px;color:#aab8d4}
-.toolbar{width:min(1200px,94%);margin:20px auto;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-#search{flex:1 1 320px;max-width:650px;padding:14px 18px;border:1px solid #33486f;border-radius:30px;background:#10182b;color:#fff;outline:none;font-size:16px}
-#search:focus{border-color:#00e5ff}
-.filter{padding:11px 16px;border:0;border-radius:22px;background:#1a2743;color:#fff;cursor:pointer;font-weight:700}
-.filter.active,.filter:hover{background:#00cfe8;color:#001016}
-#count{width:min(1200px,94%);margin:0 auto 14px;color:#8fa0c0}
-.grid{width:min(1200px,94%);margin:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;padding-bottom:35px}
-.card{background:#10182b;border:1px solid #273b60;border-radius:16px;padding:12px;transition:.2s;overflow:hidden}
-.card:hover{transform:translateY(-4px);border-color:#00e5ff}
-.logo{height:145px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;position:relative}
-.logo .num{position:absolute;top:8px;left:9px;font-size:11px;font-weight:700;background:rgba(0,0,0,.35);padding:4px 7px;border-radius:10px}
-.logo .icon{font-size:58px;line-height:1}
-.logo .brand{font-size:13px;font-weight:800;margin-top:8px;text-shadow:0 1px 3px #000}
-.name{font-size:16px;font-weight:800;margin:11px 2px 5px}
-.cat{font-size:12px;color:#91a0bd;margin:0 2px 11px}
-.play{width:100%;border:0;border-radius:10px;padding:10px;background:#00c853;color:#fff;font-weight:800;cursor:pointer}
-.play:hover{background:#00a944}
-.empty{grid-column:1/-1;text-align:center;padding:50px;color:#9aa8c3}
-footer{padding:22px;text-align:center;color:#7585a4;background:#060a12}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:20px;z-index:10}
-.modal.show{display:flex}
-.dialog{width:min(480px,100%);background:#111a2d;border:1px solid #38527f;border-radius:18px;padding:24px;text-align:center}
-.dialog .big{font-size:64px}
-.dialog h2{margin:8px 0} .dialog p{color:#aebbd2;margin-bottom:18px}
-.close{border:0;border-radius:10px;padding:10px 18px;background:#00cfe8;color:#001016;font-weight:800;cursor:pointer}
-@media(max-width:520px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.logo{height:105px}.logo .icon{font-size:42px}.name{font-size:14px}}
+:root{--bg:#070b16;--panel:#10172a;--panel2:#151f38;--text:#f6f8ff;--muted:#9aa8c7;--accent:#00e5ff;--accent2:#7c4dff}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at top,#18264a 0,#070b16 45%);color:var(--text)}
+body{overflow-x:hidden}.top{position:sticky;top:0;z-index:10;background:rgba(7,11,22,.88);backdrop-filter:blur(14px);border-bottom:1px solid #263453}
+header{max-width:1400px;margin:auto;padding:22px 20px 16px;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.brand{font-weight:900;font-size:30px;letter-spacing:-1px}.brand b{color:var(--accent)}.brand small{display:block;font-size:12px;color:var(--muted);font-weight:600;margin-top:3px}
+.search{width:min(460px,100%);display:flex;gap:8px}.search input{width:100%;background:#0e1528;border:1px solid #2b3b62;color:#fff;padding:13px 16px;border-radius:14px;outline:none}.search input:focus{border-color:var(--accent)}
+.filters{max-width:1400px;margin:auto;padding:0 20px 18px;display:flex;gap:8px;overflow:auto}.filters button{white-space:nowrap;border:1px solid #2a3a60;background:#111a30;color:#cbd5ee;padding:9px 14px;border-radius:999px;cursor:pointer}.filters button.active,.filters button:hover{background:var(--accent);color:#001116;border-color:var(--accent);font-weight:800}
+main{max-width:1400px;margin:auto;padding:20px}.count{color:var(--muted);font-size:14px;margin:0 0 14px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
+.card{background:linear-gradient(145deg,#121a30,#0d1426);border:1px solid #263655;border-radius:18px;padding:10px;box-shadow:0 8px 30px #0004;transition:.2s}.card:hover{transform:translateY(-5px);border-color:#3d5d96}
+.logo{height:145px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:60px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--c1),var(--c2))}
+.logo:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 20%,#fff2 45%,transparent 65%);transform:translateX(-100%);transition:.5s}.card:hover .logo:after{transform:translateX(100%)}
+.badge{position:absolute;left:8px;top:8px;background:#0008;padding:4px 8px;border-radius:8px;font-size:10px;font-weight:800;z-index:1}.info{padding:10px 3px 3px}.name{font-size:16px;font-weight:900}.cat{font-size:12px;color:var(--muted);margin:4px 0 10px}.play{width:100%;border:0;border-radius:10px;padding:11px;background:linear-gradient(90deg,var(--accent),#40c4ff);color:#001018;font-weight:900;cursor:pointer}.play:hover{filter:brightness(1.08)}
+.empty{text-align:center;padding:70px 10px;color:var(--muted)}
+footer{text-align:center;padding:35px;color:#71809f;font-size:12px}
+.modal{position:fixed;inset:0;background:#02050dcc;display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.show{display:flex}
+.box{width:min(900px,100%);background:#0c1324;border:1px solid #314367;border-radius:20px;box-shadow:0 30px 100px #000b;overflow:hidden}.bar{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #263653}.bar strong{font-size:18px}.close{border:0;background:#202c46;color:#fff;width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:20px}
+#gameArea{padding:18px;min-height:520px;display:flex;align-items:center;justify-content:center;position:relative}canvas{background:#050912;border:1px solid #263653;border-radius:14px;max-width:100%;touch-action:none}
+.hud{position:absolute;left:30px;right:30px;top:26px;display:flex;justify-content:space-between;pointer-events:none;font-weight:900;text-shadow:0 2px 5px #000}.hint{position:absolute;bottom:28px;color:#9fb0d0;font-size:13px;text-align:center;left:20px;right:20px}
+.overlay{position:absolute;inset:18px;display:none;align-items:center;justify-content:center;background:#0009;border-radius:14px;text-align:center}.overlay.show{display:flex}.result{background:#101a30;border:1px solid #36517d;padding:25px;border-radius:18px}.result h2{margin:0 0 8px}.result button{border:0;background:var(--accent);padding:11px 18px;border-radius:10px;font-weight:900;cursor:pointer}
+@media(max-width:600px){.brand{font-size:25px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.logo{height:105px;font-size:45px}.name{font-size:14px}.play{padding:9px;font-size:12px}#gameArea{min-height:470px}}
 </style>
 </head>
 <body>
+<div class="top">
 <header>
-<h1>🎮 Game<span>Zone</span></h1>
-<p class="subtitle">100 Free Games • Search • Categories • Play</p>
+  <div class="brand">🎮 Game<b>Hub</b> <span style="color:#a8b6d3">100</span><small>100 browser games • no install</small></div>
+  <div class="search"><input id="search" placeholder="🔎 Search a game..."></div>
 </header>
-<section class="toolbar">
-<input id="search" type="search" placeholder="🔍 Search a game..." autocomplete="off">
-<div id="filters"></div>
-</section>
-<div id="count"></div>
-<main id="grid" class="grid"></main>
-<footer>© 2026 GameZone • 100 Games</footer>
+<div class="filters" id="filters"></div>
+</div>
 
-<div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="dialog">
-    <div id="modalIcon" class="big">🎮</div>
-    <h2 id="modalTitle">Game</h2>
-    <p id="modalText">Game is ready.</p>
-    <button class="close" id="closeModal">Close</button>
-  </div>
+<main>
+  <p class="count" id="count"></p>
+  <section class="grid" id="grid"></section>
+</main>
+<footer>GameHub 100 • HTML + CSS + JavaScript • Play directly in your browser</footer>
+
+<div class="modal" id="modal">
+ <div class="box">
+  <div class="bar"><strong id="gameTitle">Game</strong><button class="close" id="close">×</button></div>
+  <div id="gameArea"></div>
+ </div>
 </div>
 
 <script>
-"use strict";
-
-const games = [
-  {
-    "name": "Subway Runner",
-    "category": "Arcade",
-    "icon": "🏃"
-  },
-  {
-    "name": "Speed Racer",
-    "category": "Racing",
-    "icon": "🏎️"
-  },
-  {
-    "name": "Ninja Attack",
-    "category": "Action",
-    "icon": "🥷"
-  },
-  {
-    "name": "Jungle Adventure",
-    "category": "Adventure",
-    "icon": "🌴"
-  },
-  {
-    "name": "Space Shooter",
-    "category": "Action",
-    "icon": "🚀"
-  },
-  {
-    "name": "Football Challenge",
-    "category": "Sports",
-    "icon": "⚽"
-  },
-  {
-    "name": "Basketball Stars",
-    "category": "Sports",
-    "icon": "🏀"
-  },
-  {
-    "name": "Car Drift",
-    "category": "Racing",
-    "icon": "🚘"
-  },
-  {
-    "name": "Puzzle Master",
-    "category": "Puzzle",
-    "icon": "🧩"
-  },
-  {
-    "name": "Block Blast",
-    "category": "Puzzle",
-    "icon": "🧱"
-  },
-  {
-    "name": "Zombie Hunter",
-    "category": "Action",
-    "icon": "🧟"
-  },
-  {
-    "name": "Monster Run",
-    "category": "Arcade",
-    "icon": "👹"
-  },
-  {
-    "name": "City Driver",
-    "category": "Racing",
-    "icon": "🚕"
-  },
-  {
-    "name": "Bike Racing",
-    "category": "Racing",
-    "icon": "🏍️"
-  },
-  {
-    "name": "Super Soccer",
-    "category": "Sports",
-    "icon": "⚽"
-  },
-  {
-    "name": "Tennis Pro",
-    "category": "Sports",
-    "icon": "🎾"
-  },
-  {
-    "name": "Chess Master",
-    "category": "Puzzle",
-    "icon": "♟️"
-  },
-  {
-    "name": "Candy Match",
-    "category": "Puzzle",
-    "icon": "🍬"
-  },
-  {
-    "name": "Bubble Shooter",
-    "category": "Arcade",
-    "icon": "🫧"
-  },
-  {
-    "name": "Alien Attack",
-    "category": "Action",
-    "icon": "👽"
-  },
-  {
-    "name": "Highway Racer",
-    "category": "Racing",
-    "icon": "🛣️"
-  },
-  {
-    "name": "Desert Race",
-    "category": "Racing",
-    "icon": "🏜️"
-  },
-  {
-    "name": "Snow Rider",
-    "category": "Racing",
-    "icon": "❄️"
-  },
-  {
-    "name": "Street Driver",
-    "category": "Racing",
-    "icon": "🚗"
-  },
-  {
-    "name": "Formula Speed",
-    "category": "Racing",
-    "icon": "🏁"
-  },
-  {
-    "name": "Drift King",
-    "category": "Racing",
-    "icon": "🏎️"
-  },
-  {
-    "name": "Moto Speed",
-    "category": "Racing",
-    "icon": "🏍️"
-  },
-  {
-    "name": "Traffic Racer",
-    "category": "Racing",
-    "icon": "🚦"
-  },
-  {
-    "name": "Rocket Race",
-    "category": "Racing",
-    "icon": "🚀"
-  },
-  {
-    "name": "Offroad Driver",
-    "category": "Racing",
-    "icon": "🚙"
-  },
-  {
-    "name": "Ninja Warrior",
-    "category": "Action",
-    "icon": "🥷"
-  },
-  {
-    "name": "Samurai Fight",
-    "category": "Action",
-    "icon": "⚔️"
-  },
-  {
-    "name": "Robot Battle",
-    "category": "Action",
-    "icon": "🤖"
-  },
-  {
-    "name": "Dinosaur Attack",
-    "category": "Action",
-    "icon": "🦖"
-  },
-  {
-    "name": "Dragon Fighter",
-    "category": "Action",
-    "icon": "🐉"
-  },
-  {
-    "name": "Pirate Battle",
-    "category": "Action",
-    "icon": "🏴‍☠️"
-  },
-  {
-    "name": "Space Warrior",
-    "category": "Action",
-    "icon": "🧑‍🚀"
-  },
-  {
-    "name": "Hero Quest",
-    "category": "Adventure",
-    "icon": "🛡️"
-  },
-  {
-    "name": "Monster Fighter",
-    "category": "Action",
-    "icon": "👹"
-  },
-  {
-    "name": "Battle Arena",
-    "category": "Action",
-    "icon": "🥊"
-  },
-  {
-    "name": "Memory Match",
-    "category": "Puzzle",
-    "icon": "🧠"
-  },
-  {
-    "name": "2048 Master",
-    "category": "Puzzle",
-    "icon": "🔢"
-  },
-  {
-    "name": "Sudoku",
-    "category": "Puzzle",
-    "icon": "🔢"
-  },
-  {
-    "name": "Word Puzzle",
-    "category": "Puzzle",
-    "icon": "🔤"
-  },
-  {
-    "name": "Number Match",
-    "category": "Puzzle",
-    "icon": "➕"
-  },
-  {
-    "name": "Jigsaw Puzzle",
-    "category": "Puzzle",
-    "icon": "🧩"
-  },
-  {
-    "name": "Color Match",
-    "category": "Puzzle",
-    "icon": "🎨"
-  },
-  {
-    "name": "Maze Runner",
-    "category": "Puzzle",
-    "icon": "🌀"
-  },
-  {
-    "name": "Brain Test",
-    "category": "Puzzle",
-    "icon": "🧠"
-  },
-  {
-    "name": "Logic Master",
-    "category": "Puzzle",
-    "icon": "💡"
-  },
-  {
-    "name": "Penalty Shoot",
-    "category": "Sports",
-    "icon": "🥅"
-  },
-  {
-    "name": "Cricket Pro",
-    "category": "Sports",
-    "icon": "🏏"
-  },
-  {
-    "name": "Golf Challenge",
-    "category": "Sports",
-    "icon": "⛳"
-  },
-  {
-    "name": "Baseball Hit",
-    "category": "Sports",
-    "icon": "⚾"
-  },
-  {
-    "name": "Boxing Champion",
-    "category": "Sports",
-    "icon": "🥊"
-  },
-  {
-    "name": "Hockey Stars",
-    "category": "Sports",
-    "icon": "🏒"
-  },
-  {
-    "name": "Volleyball Pro",
-    "category": "Sports",
-    "icon": "🏐"
-  },
-  {
-    "name": "Skateboard Hero",
-    "category": "Sports",
-    "icon": "🛹"
-  },
-  {
-    "name": "Archery Master",
-    "category": "Sports",
-    "icon": "🏹"
-  },
-  {
-    "name": "Bowling King",
-    "category": "Sports",
-    "icon": "🎳"
-  },
-  {
-    "name": "Flappy Sky",
-    "category": "Arcade",
-    "icon": "🐦"
-  },
-  {
-    "name": "Classic Snake",
-    "category": "Arcade",
-    "icon": "🐍"
-  },
-  {
-    "name": "Brick Breaker",
-    "category": "Arcade",
-    "icon": "🧱"
-  },
-  {
-    "name": "Space Invaders",
-    "category": "Arcade",
-    "icon": "👾"
-  },
-  {
-    "name": "Pac Runner",
-    "category": "Arcade",
-    "icon": "🟡"
-  },
-  {
-    "name": "Jump Hero",
-    "category": "Arcade",
-    "icon": "🦸"
-  },
-  {
-    "name": "Coin Collector",
-    "category": "Arcade",
-    "icon": "🪙"
-  },
-  {
-    "name": "Fire Jump",
-    "category": "Arcade",
-    "icon": "🔥"
-  },
-  {
-    "name": "Sky Runner",
-    "category": "Arcade",
-    "icon": "☁️"
-  },
-  {
-    "name": "Tower Jump",
-    "category": "Arcade",
-    "icon": "🏰"
-  },
-  {
-    "name": "Ocean Adventure",
-    "category": "Adventure",
-    "icon": "🌊"
-  },
-  {
-    "name": "Island Survivor",
-    "category": "Adventure",
-    "icon": "🏝️"
-  },
-  {
-    "name": "Castle Defense",
-    "category": "Action",
-    "icon": "🏰"
-  },
-  {
-    "name": "Tank Battle",
-    "category": "Action",
-    "icon": "🪖"
-  },
-  {
-    "name": "Air Fighter",
-    "category": "Action",
-    "icon": "✈️"
-  },
-  {
-    "name": "Laser Warrior",
-    "category": "Action",
-    "icon": "🔫"
-  },
-  {
-    "name": "Cyber Hero",
-    "category": "Action",
-    "icon": "💻"
-  },
-  {
-    "name": "Robot Runner",
-    "category": "Action",
-    "icon": "🤖"
-  },
-  {
-    "name": "Fire Dragon",
-    "category": "Action",
-    "icon": "🐲"
-  },
-  {
-    "name": "Galaxy Battle",
-    "category": "Action",
-    "icon": "🌌"
-  },
-  {
-    "name": "Color Blocks",
-    "category": "Puzzle",
-    "icon": "🟦"
-  },
-  {
-    "name": "Match 3",
-    "category": "Puzzle",
-    "icon": "3️⃣"
-  },
-  {
-    "name": "Tile Master",
-    "category": "Puzzle",
-    "icon": "🔳"
-  },
-  {
-    "name": "Word Master",
-    "category": "Puzzle",
-    "icon": "🔠"
-  },
-  {
-    "name": "Connect Dots",
-    "category": "Puzzle",
-    "icon": "🔵"
-  },
-  {
-    "name": "Escape Room",
-    "category": "Puzzle",
-    "icon": "🚪"
-  },
-  {
-    "name": "Find Difference",
-    "category": "Puzzle",
-    "icon": "🔎"
-  },
-  {
-    "name": "Brain Blocks",
-    "category": "Puzzle",
-    "icon": "🧠"
-  },
-  {
-    "name": "Math Challenge",
-    "category": "Puzzle",
-    "icon": "➗"
-  },
-  {
-    "name": "Puzzle Quest",
-    "category": "Puzzle",
-    "icon": "🗺️"
-  },
-  {
-    "name": "Monster Truck",
-    "category": "Racing",
-    "icon": "🚛"
-  },
-  {
-    "name": "F1 Racing",
-    "category": "Racing",
-    "icon": "🏁"
-  },
-  {
-    "name": "Super Bike",
-    "category": "Racing",
-    "icon": "🏍️"
-  },
-  {
-    "name": "Police Chase",
-    "category": "Racing",
-    "icon": "🚓"
-  },
-  {
-    "name": "Speed Boat",
-    "category": "Racing",
-    "icon": "🚤"
-  },
-  {
-    "name": "Airport Race",
-    "category": "Racing",
-    "icon": "✈️"
-  },
-  {
-    "name": "Stunt Car",
-    "category": "Racing",
-    "icon": "🚗"
-  },
-  {
-    "name": "Mega Drift",
-    "category": "Racing",
-    "icon": "💨"
-  },
-  {
-    "name": "Road Fury",
-    "category": "Racing",
-    "icon": "🛣️"
-  },
-  {
-    "name": "Ultimate Racer",
-    "category": "Racing",
-    "icon": "🏆"
-  }
+const games=[
+["Neon Runner","Arcade","🏃","runner"],["Sky Dash","Arcade","🚀","runner"],["Jungle Run","Adventure","🌴","runner"],["Cyber Runner","Arcade","🤖","runner"],["Lava Escape","Adventure","🌋","runner"],
+["Coin Rush","Arcade","🪙","catch"],["Gem Catcher","Puzzle","💎","catch"],["Star Collector","Space","⭐","catch"],["Fruit Catch","Arcade","🍎","catch"],["Treasure Drop","Adventure","💰","catch"],
+["Space Shooter","Action","🚀","shooter"],["Alien Blaster","Action","👽","shooter"],["Galaxy War","Space","🌌","shooter"],["Meteor Strike","Space","☄️","shooter"],["Robot Attack","Action","🤖","shooter"],
+["Tank Battle","Action","🛡️","shooter"],["Laser Defender","Action","🔫","shooter"],["Astro Fighter","Space","🛸","shooter"],["Zombie Blaster","Action","🧟","shooter"],["Boss Arena","Action","👹","shooter"],
+["Snake Classic","Arcade","🐍","snake"],["Neon Snake","Arcade","🟢","snake"],["Snake Rush","Arcade","🐍","snake"],["Turbo Snake","Arcade","⚡","snake"],["Pixel Snake","Arcade","🕹️","snake"],
+["Fruit Snake","Arcade","🍉","snake"],["Cyber Snake","Arcade","💻","snake"],["Space Snake","Space","🌠","snake"],["Rainbow Snake","Arcade","🌈","snake"],["Snake Master","Arcade","👑","snake"],
+["Tap Champion","Casual","👆","click"],["Coin Clicker","Casual","🪙","click"],["Gem Clicker","Casual","💎","click"],["Power Click","Casual","⚡","click"],["Rocket Clicker","Space","🚀","click"],
+["Magic Clicker","Casual","✨","click"],["Gold Miner Click","Casual","⛏️","click"],["Monster Click","Action","👾","click"],["Star Clicker","Space","⭐","click"],["Mega Click","Casual","💥","click"],
+["Target Master","Skill","🎯","target"],["Quick Aim","Skill","🔴","target"],["Bullseye","Skill","🎯","target"],["Ninja Aim","Action","🥷","target"],["Space Target","Space","🪐","target"],
+["Alien Target","Action","👽","target"],["Robot Aim","Action","🤖","target"],["Color Target","Puzzle","🎨","target"],["Speed Target","Skill","⚡","target"],["Perfect Shot","Skill","🏹","target"],
+["Memory Flip","Puzzle","🧠","memory"],["Card Match","Puzzle","🃏","memory"],["Emoji Match","Puzzle","😀","memory"],["Animal Match","Puzzle","🐯","memory"],["Color Memory","Puzzle","🎨","memory"],
+["Number Memory","Puzzle","🔢","memory"],["Space Memory","Space","🌟","memory"],["Food Match","Puzzle","🍕","memory"],["Monster Memory","Puzzle","👹","memory"],["Brain Match","Puzzle","🧩","memory"],
+["Road Racer","Racing","🏎️","dodge"],["Traffic Rush","Racing","🚗","dodge"],["Highway Escape","Racing","🛣️","dodge"],["Formula Dash","Racing","🏁","dodge"],["Street Racer","Racing","🚘","dodge"],
+["Police Chase","Racing","🚓","dodge"],["Night Drive","Racing","🌙","dodge"],["Desert Driver","Racing","🏜️","dodge"],["Snow Drive","Racing","❄️","dodge"],["Cyber Car","Racing","🏎️","dodge"],
+["Brick Breaker","Arcade","🧱","target"],["Bubble Pop","Arcade","🫧","target"],["Ball Smash","Arcade","⚽","target"],["Meteor Pop","Space","☄️","target"],["Block Pop","Puzzle","🟦","target"],
+["Candy Pop","Casual","🍬","target"],["Star Pop","Space","⭐","target"],["Monster Pop","Action","👾","target"],["Fire Pop","Action","🔥","target"],["Mega Pop","Arcade","💥","target"],
+["Basketball Shot","Sports","🏀","target"],["Football Kick","Sports","⚽","target"],["Penalty Pro","Sports","🥅","target"],["Golf Hit","Sports","⛳","target"],["Archery Pro","Sports","🏹","target"],
+["Boxing Tap","Sports","🥊","click"],["Tennis Aim","Sports","🎾","target"],["Bowling Strike","Sports","🎳","target"],["Hockey Shot","Sports","🏒","target"],["Baseball Hit","Sports","⚾","target"],
+["Dino Escape","Adventure","🦖","runner"],["Dragon Run","Adventure","🐉","runner"],["Pirate Run","Adventure","🏴‍☠️","runner"],["Ninja Dash","Action","🥷","runner"],["Castle Escape","Adventure","🏰","runner"],
+["Ghost Escape","Action","👻","runner"],["Ocean Run","Adventure","🌊","runner"],["Volcano Run","Adventure","🌋","runner"],["Moon Run","Space","🌙","runner"],["Galaxy Run","Space","🌌","runner"]
 ];
 
-const grid = document.getElementById("grid");
-const search = document.getElementById("search");
-const filters = document.getElementById("filters");
-const count = document.getElementById("count");
-const modal = document.getElementById("modal");
-const modalIcon = document.getElementById("modalIcon");
-const modalTitle = document.getElementById("modalTitle");
-const modalText = document.getElementById("modalText");
+const colors=[
+["#00e5ff","#315cff"],["#7c4dff","#e91e63"],["#00c853","#00a884"],["#ff9800","#ff3d00"],["#f50057","#7b1fa2"],
+["#2196f3","#00bcd4"],["#8bc34a","#4caf50"],["#ff1744","#ff9100"],["#651fff","#d500f9"],["#009688","#00e5ff"]
+];
 
-const categoryColors = {
-  Action: ["#ff512f","#dd2476"],
-  Racing: ["#11998e","#38ef7d"],
-  Puzzle: ["#4776e6","#8e54e9"],
-  Sports: ["#f7971e","#ffd200"],
-  Arcade: ["#00c6ff","#0072ff"],
-  Adventure: ["#56ab2f","#a8e063"]
-};
+const categories=["All",...new Set(games.map(g=>g[1]))];
+let current="All";
 
-const categories = ["All", ...new Set(games.map(game => game.category))];
-
-function makeLogo(game, index) {
-  const pair = categoryColors[game.category] || ["#434343","#000000"];
-  return `
-    <div class="logo" style="background:linear-gradient(135deg,${pair[0]},${pair[1]})">
-      <span class="num">GAME ${index + 1}</span>
-      <span class="icon">${game.icon}</span>
-      <span class="brand">${escapeHtml(game.name)}</span>
-    </div>`;
-}
-
-function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[char]));
-}
-
-function renderFilters(active = "All") {
-  filters.innerHTML = "";
-  categories.forEach(category => {
-    const button = document.createElement("button");
-    button.className = "filter" + (category === active ? " active" : "");
-    button.textContent = category;
-    button.type = "button";
-    button.addEventListener("click", () => {
-      document.querySelectorAll(".filter").forEach(btn => btn.classList.remove("active"));
-      button.classList.add("active");
-      renderGames(category);
-    });
-    filters.appendChild(button);
-  });
-}
-
-function renderGames(category = "All") {
-  const query = search.value.trim().toLowerCase();
-  const result = games.filter(game => {
-    const categoryOk = category === "All" || game.category === category;
-    const searchOk = game.name.toLowerCase().includes(query);
-    return categoryOk && searchOk;
-  });
-
-  count.textContent = `Showing ${result.length} of ${games.length} games`;
-  grid.innerHTML = "";
-
-  if (!result.length) {
-    grid.innerHTML = '<div class="empty">😔 No games found.</div>';
-    return;
-  }
-
-  result.forEach(game => {
-    const index = games.indexOf(game);
-    const card = document.createElement("article");
-    card.className = "card";
-    card.innerHTML = `
-      ${makeLogo(game, index)}
-      <div class="name">${escapeHtml(game.name)}</div>
-      <div class="cat">${escapeHtml(game.category)}</div>
-      <button class="play" type="button">▶ Play Now</button>
-    `;
-    card.querySelector(".play").addEventListener("click", () => openGame(game));
-    grid.appendChild(card);
-  });
-}
-
-function openGame(game) {
-  modalIcon.textContent = game.icon;
-  modalTitle.textContent = game.name;
-  modalText.textContent = `${game.name} is selected. Add its real game URL/file inside openGame() when you have the game.`;
-  modal.classList.add("show");
-}
-
-function closeGame() {
-  modal.classList.remove("show");
-}
-
-search.addEventListener("input", () => {
-  const active = document.querySelector(".filter.active");
-  renderGames(active ? active.textContent : "All");
+const filters=document.getElementById("filters");
+categories.forEach(c=>{
+ const b=document.createElement("button"); b.textContent=c; b.className=c==="All"?"active":"";
+ b.onclick=()=>{current=c;document.querySelectorAll(".filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");render()};
+ filters.appendChild(b);
 });
 
-document.getElementById("closeModal").addEventListener("click", closeGame);
-modal.addEventListener("click", event => {
-  if (event.target === modal) closeGame();
-});
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape") closeGame();
-});
+function render(){
+ const q=document.getElementById("search").value.toLowerCase().trim();
+ const list=games.map((g,i)=>({...g,i})).filter(g=>(current==="All"||g[1]===current)&&g[0].toLowerCase().includes(q));
+ document.getElementById("count").textContent=`Showing ${list.length} of 100 games`;
+ const grid=document.getElementById("grid"); grid.innerHTML="";
+ if(!list.length){grid.innerHTML='<div class="empty">😕 No game found.</div>';return}
+ list.forEach(g=>{
+  const c=colors[g.i%colors.length];
+  const card=document.createElement("article"); card.className="card";
+  card.innerHTML=`<div class="logo" style="--c1:${c[0]};--c2:${c[1]}"><span class="badge">#${g.i+1}</span>${g[2]}</div><div class="info"><div class="name">${g[0]}</div><div class="cat">${g[1]}</div><button class="play">▶ PLAY NOW</button></div>`;
+  card.querySelector(".play").onclick=()=>openGame(g);
+  grid.appendChild(card);
+ });
+}
+document.getElementById("search").addEventListener("input",render);
 
-renderFilters();
-renderGames();
+const modal=document.getElementById("modal"), area=document.getElementById("gameArea"), title=document.getElementById("gameTitle");
+document.getElementById("close").onclick=closeGame;
+modal.onclick=e=>{if(e.target===modal)closeGame()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeGame()});
+
+let cleanup=()=>{};
+function closeGame(){cleanup();cleanup=()=>{};modal.classList.remove("show");area.innerHTML=""}
+
+function openGame(g){
+ closeGame(); title.textContent=`#${g.i+1} • ${g[0]}`; modal.classList.add("show");
+ const type=g[3];
+ if(type==="click")startClicker(g);
+ else if(type==="catch")startCatch(g);
+ else if(type==="runner")startRunner(g);
+ else if(type==="dodge")startDodge(g);
+ else if(type==="shooter")startShooter(g);
+ else if(type==="snake")startSnake(g);
+ else if(type==="memory")startMemory(g);
+ else startTarget(g);
+}
+
+/* Shared canvas helpers */
+function makeCanvas(w=760,h=430){
+ area.innerHTML=`<canvas width="${w}" height="${h}"></canvas><div class="hud"><span id="score">Score: 0</span><span id="time">Time: 30</span></div><div class="hint">Mouse / touch to play • Press ESC to close</div><div class="overlay" id="over"><div class="result"><h2 id="resultTitle">Game Over</h2><p id="resultText"></p><button id="again">PLAY AGAIN</button></div></div>`;
+ return area.querySelector("canvas");
+}
+function finish(score,msg="Great job!"){
+ const o=document.getElementById("over"); document.getElementById("resultTitle").textContent="🏆 Game Over"; document.getElementById("resultText").textContent=`Score: ${score} • ${msg}`; o.classList.add("show");
+ document.getElementById("again").onclick=()=>openGame(games.find(x=>x[0]===title.textContent.split(" • ")[1])||games[0]);
+}
+function setHud(s,t){document.getElementById("score").textContent=`Score: ${s}`;document.getElementById("time").textContent=`Time: ${Math.max(0,Math.ceil(t))}`}
+
+/* CLICKER */
+function startClicker(g){
+ const c=makeCanvas(),x=c.getContext("2d"),cx=c.width/2,cy=c.height/2;let score=0,time=20,dead=false;
+ function draw(){x.clearRect(0,0,c.width,c.height);x.fillStyle="#0a1020";x.fillRect(0,0,c.width,c.height);x.beginPath();x.arc(cx,cy,105,0,Math.PI*2);x.fillStyle="#00e5ff";x.fill();x.fillStyle="#00151c";x.font="bold 28px Arial";x.textAlign="center";x.fillText(g[2]+" TAP!",cx,cy+10);x.font="bold 18px Arial";x.fillText("CLICK!",cx,cy+42)}
+ function hit(px,py){if(dead)return;let d=Math.hypot(px-cx,py-cy);if(d<115){score++;setHud(score,time);draw()}}
+ c.onpointerdown=e=>{const r=c.getBoundingClientRect();hit((e.clientX-r.left)*c.width/r.width,(e.clientY-r.top)*c.height/r.height)};
+ draw();setHud(score,time);const iv=setInterval(()=>{time-=.1;setHud(score,time);if(time<=0){dead=true;clearInterval(iv);finish(score,"Tap speed matters!");}},100);cleanup=()=>clearInterval(iv)
+}
+
+/* CATCH */
+function startCatch(g){
+ const c=makeCanvas(),x=c.getContext("2d");let score=0,time=25,px=c.width/2,items=[],dead=false,spawn=0;
+ c.onpointermove=e=>{const r=c.getBoundingClientRect();px=(e.clientX-r.left)*c.width/r.width};
+ c.onpointerdown=e=>{const r=c.getBoundingClientRect();px=(e.clientX-r.left)*c.width/r.width};
+ function loop(){
+  if(dead)return;x.clearRect(0,0,c.width,c.height);x.fillStyle="#07101d";x.fillRect(0,0,c.width,c.height);
+  spawn++;if(spawn%28===0)items.push({x:25+Math.random()*(c.width-50),y:-25,v:2+Math.random()*3});
+  x.fillStyle="#00e5ff";x.fillRect(px-55,c.height-38,110,18);
+  items.forEach(o=>{o.y+=o.v;x.font="32px Arial";x.textAlign="center";x.fillText(g[2],o.x,o.y);if(o.y>c.height-60&&Math.abs(o.x-px)<65){score++;o.y=999;setHud(score,time)}});
+  items=items.filter(o=>o.y<500);requestAnimationFrame(loop)
+ } loop();setHud(0,time);const iv=setInterval(()=>{time-=1;setHud(score,time);if(time<=0){dead=true;clearInterval(iv);finish(score,"Catch as many as you can!");}},1000);cleanup=()=>{dead=true;clearInterval(iv)}
+}
+
+/* RUNNER */
+function startRunner(g){
+ const c=makeCanvas(),x=c.getContext("2d");let py=350,vy=0,score=0,time=30,dead=false,obs=[],frame=0,onGround=true;
+ const jump=()=>{if(onGround){vy=-13;onGround=false}};c.onpointerdown=jump;document.addEventListener("keydown",key);
+ function key(e){if(e.code==="Space"||e.code==="ArrowUp")jump()}
+ function loop(){if(dead)return;frame++;x.fillStyle="#08101e";x.fillRect(0,0,c.width,c.height);x.fillStyle="#17294a";x.fillRect(0,390,c.width,40);
+  vy+=.6;py+=vy;if(py>=350){py=350;vy=0;onGround=true}if(frame%70===0)obs.push({x:c.width+20,w:28+Math.random()*30,h:30+Math.random()*55});
+  x.fillStyle="#00e5ff";x.fillRect(90,py,38,40);x.font="30px Arial";x.fillText(g[2],109,py+33);
+  x.fillStyle="#ff4d6d";obs.forEach(o=>{o.x-=6;x.fillRect(o.x,390-o.h,o.w,o.h);if(o.x<128&&o.x+o.w>90&&py+40>390-o.h){dead=true;finish(score,"Jump over the obstacles!")}});
+  obs=obs.filter(o=>o.x>-80);score+=.02;setHud(Math.floor(score),time);requestAnimationFrame(loop)
+ }loop();const iv=setInterval(()=>{time--;if(time<=0&&!dead){dead=true;clearInterval(iv);finish(Math.floor(score),"You survived!");}},1000);cleanup=()=>{dead=true;clearInterval(iv);document.removeEventListener("keydown",key)}
+}
+
+/* DODGE */
+function startDodge(g){
+ const c=makeCanvas(),x=c.getContext("2d");let px=c.width/2,score=0,time=30,dead=false,blocks=[],frame=0;
+ const move=e=>{const r=c.getBoundingClientRect();px=Math.max(20,Math.min(c.width-20,(e.clientX-r.left)*c.width/r.width))};c.onpointermove=move;c.onpointerdown=move;
+ function loop(){if(dead)return;frame++;x.fillStyle="#080d18";x.fillRect(0,0,c.width,c.height);if(frame%18===0)blocks.push({x:20+Math.random()*(c.width-40),y:-30,v:3+Math.random()*5});
+  x.fillStyle="#00e5ff";x.fillRect(px-22,c.height-55,44,28);blocks.forEach(b=>{b.y+=b.v;x.fillStyle="#ff1744";x.fillRect(b.x-15,b.y,30,30);if(b.y>c.height-85&&Math.abs(b.x-px)<38){dead=true;finish(score,"Avoid the falling objects!")}});
+  blocks=blocks.filter(b=>b.y<c.height+40);score++;setHud(score,time);requestAnimationFrame(loop)
+ }loop();const iv=setInterval(()=>{time--;if(time<=0&&!dead){dead=true;clearInterval(iv);finish(score,"Perfect dodge!");}},1000);cleanup=()=>{dead=true;clearInterval(iv)}
+}
+
+/* SHOOTER */
+function startShooter(g){
+ const c=makeCanvas(),x=c.getContext("2d");let score=0,time=30,px=c.width/2,shots=[],enemies=[],frame=0,dead=false;
+ const move=e=>{const r=c.getBoundingClientRect();px=(e.clientX-r.left)*c.width/r.width};c.onpointermove=move;
+ c.onpointerdown=()=>shots.push({x:px,y:c.height-55});
+ function loop(){if(dead)return;frame++;x.fillStyle="#030712";x.fillRect(0,0,c.width,c.height);if(frame%38===0)enemies.push({x:20+Math.random()*(c.width-40),y:45,v:1+Math.random()*2});
+  x.fillStyle="#00e5ff";x.fillRect(px-22,c.height-35,44,18);x.font="25px Arial";x.fillText("🚀",px-14,c.height-38);
+  shots.forEach(s=>s.y-=8);enemies.forEach(e=>e.y+=e.v);x.font="28px Arial";x.textAlign="center";enemies.forEach(e=>x.fillText(g[2],e.x,e.y));
+  shots.forEach(s=>enemies.forEach(e=>{if(Math.hypot(s.x-e.x,s.y-e.y)<25){e.y=999;s.y=-99;score++;setHud(score,time)}}));
+  enemies=enemies.filter(e=>e.y<470);shots=shots.filter(s=>s.y>-20);requestAnimationFrame(loop)
+ }loop();const iv=setInterval(()=>{time--;setHud(score,time);if(time<=0&&!dead){dead=true;clearInterval(iv);finish(score,"Target destroyed!");}},1000);cleanup=()=>{dead=true;clearInterval(iv)}
+}
+
+/* SNAKE */
+function startSnake(g){
+ const c=makeCanvas(600,420),x=c.getContext("2d");const cell=20,cols=30,rows=21;let snake=[{x:15,y:10}],dir={x:1,y:0},next=dir,food={x:5,y:5},score=0,dead=false;
+ function key(e){if(e.key==="ArrowUp"&&dir.y!==1)next={x:0,y:-1};if(e.key==="ArrowDown"&&dir.y!==-1)next={x:0,y:1};if(e.key==="ArrowLeft"&&dir.x!==1)next={x:-1,y:0};if(e.key==="ArrowRight"&&dir.x!==-1)next={x:1,y:0}}document.addEventListener("keydown",key);
+ function touch(e){const r=c.getBoundingClientRect(),tx=(e.clientX-r.left)*c.width/r.width,ty=(e.clientY-r.top)*c.height/r.height, h=c.width/2,v=c.height/2;if(Math.abs(tx-h)>Math.abs(ty-v))next=tx<h?{x:-1,y:0}:{x:1,y:0};else next=ty<v?{x:0,y:-1}:{x:0,y:1}}c.onpointerdown=touch;
+ function place(){food={x:Math.floor(Math.random()*cols),y:Math.floor(Math.random()*rows)}}
+ function step(){if(dead)return;dir=next;let h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};if(h.x<0||h.x>=cols||h.y<0||h.y>=rows||snake.some(s=>s.x===h.x&&s.y===h.y)){dead=true;finish(score,"Snake crashed!");return}snake.unshift(h);if(h.x===food.x&&h.y===food.y){score++;place()}else snake.pop();x.fillStyle="#050912";x.fillRect(0,0,c.width,c.height);x.fillStyle="#00e5ff";snake.forEach(s=>x.fillRect(s.x*cell+2,s.y*cell+2,16,16));x.font="18px Arial";x.fillText(g[2],food.x*cell+1,food.y*cell+18);setHud(score,"∞")}
+ const iv=setInterval(step,100);cleanup=()=>{dead=true;clearInterval(iv);document.removeEventListener("keydown",key)}
+}
+
+/* MEMORY */
+function startMemory(g){
+ area.innerHTML=`<div style="width:min(650px,100%);display:grid;grid-template-columns:repeat(4,1fr);gap:10px" id="mem"></div><div class="hint">Match all pairs</div>`;
+ const icons=["🍎","🚀","🐯","💎","⚽","🌟","🔥","👾"];let vals=[...icons,...icons].sort(()=>Math.random()-.5),open=[],matched=0,lock=false;
+ vals.forEach((v,i)=>{const b=document.createElement("button");b.style.cssText="height:105px;border:1px solid #33476e;border-radius:14px;background:#14203a;color:white;font-size:38px;cursor:pointer";b.textContent="❓";b.onclick=()=>{if(lock||open.includes(i)||b.dataset.done)return;b.textContent=v;open.push(i);if(open.length===2){lock=true;const [a,z]=open;if(vals[a]===vals[z]){document.querySelectorAll("#mem button")[a].dataset.done=1;document.querySelectorAll("#mem button")[z].dataset.done=1;matched+=2;open=[];lock=false;if(matched===vals.length){finish(matched,"All pairs matched!");}}else setTimeout(()=>{document.querySelectorAll("#mem button")[a].textContent="❓";document.querySelectorAll("#mem button")[z].textContent="❓";open=[];lock=false},650)}};document.getElementById("mem").appendChild(b)});
+ area.insertAdjacentHTML("beforeend",'<div class="overlay" id="over"><div class="result"><h2>🏆 You won!</h2><p>All pairs matched.</p><button id="again">PLAY AGAIN</button></div></div>');document.getElementById("again").onclick=()=>openGame(g);
+ cleanup=()=>{}
+}
+
+/* TARGET */
+function startTarget(g){
+ const c=makeCanvas(),x=c.getContext("2d");let score=0,time=20,target=null,dead=false;
+ function newTarget(){target={x:45+Math.random()*(c.width-90),y:65+Math.random()*(c.height-130),r:22+Math.random()*18}}
+ c.onpointerdown=e=>{if(dead)return;const r=c.getBoundingClientRect(),px=(e.clientX-r.left)*c.width/r.width,py=(e.clientY-r.top)*c.height/r.height;if(target&&Math.hypot(px-target.x,py-target.y)<target.r){score++;newTarget();setHud(score,time)}};
+ function loop(){if(dead)return;x.fillStyle="#070d18";x.fillRect(0,0,c.width,c.height);if(target){x.beginPath();x.arc(target.x,target.y,target.r,0,Math.PI*2);x.fillStyle="#ff1744";x.fill();x.beginPath();x.arc(target.x,target.y,target.r*.55,0,Math.PI*2);x.fillStyle="#fff";x.fill();x.beginPath();x.arc(target.x,target.y,target.r*.2,0,Math.PI*2);x.fillStyle="#ff1744";x.fill()}requestAnimationFrame(loop)}newTarget();loop();const iv=setInterval(()=>{time--;setHud(score,time);if(time<=0){dead=true;clearInterval(iv);finish(score,"Fast aim wins!");}},1000);cleanup=()=>{dead=true;clearInterval(iv)}
+}
+
+render();
 </script>
 </body>
 </html>
