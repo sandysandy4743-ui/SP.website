@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="ta">
+<html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <meta name="description"
-          content="GameZone - Play Free Games!">
-
     <title>GameZone - Play Free Games!</title>
 
 
     <style>
+
+        /* =========================
+           BODY
+        ========================== */
 
         body {
             margin: 0;
@@ -24,6 +26,10 @@
         }
 
 
+        /* =========================
+           HEADER
+        ========================== */
+
         header {
             background: #1e293b;
             padding: 15px;
@@ -33,20 +39,30 @@
         }
 
 
+        /* =========================
+           CONTAINER
+        ========================== */
+
         .container {
+            width: 100%;
             max-width: 900px;
             margin: 20px auto;
             padding: 15px;
+            box-sizing: border-box;
         }
 
+
+        /* =========================
+           GAME PLAYER
+        ========================== */
 
         .game-frame {
             position: relative;
             width: 100%;
             height: 500px;
+            background: #000;
             border-radius: 8px;
             overflow: hidden;
-            background: #000;
         }
 
 
@@ -57,66 +73,58 @@
         }
 
 
+        /* =========================
+           GAME GRID
+        ========================== */
+
         .grid {
             display: grid;
+
             grid-template-columns:
-                repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+                repeat(auto-fit, minmax(140px, 1fr));
+
+            gap: 10px;
+
             margin-top: 20px;
         }
 
+
+        /* =========================
+           GAME CARD
+        ========================== */
 
         .card {
             background: #ffffff;
             border-radius: 8px;
             overflow: hidden;
+            cursor: pointer;
 
-            box-shadow:
-                0 2px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s;
+        }
+
+
+        .card:hover {
+            transform: scale(1.03);
         }
 
 
         .card img {
             width: 100%;
-            height: 140px;
+            height: 100px;
             object-fit: cover;
-        }
-
-
-        .card h3 {
-            margin: 12px 10px 5px;
-            color: #1e293b;
+            display: block;
         }
 
 
         .card p {
-            margin: 5px 10px 15px;
-            color: #555;
+            margin: 10px;
+            font-weight: bold;
         }
 
 
-        .info {
-            background: #ffffff;
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: left;
-
-            box-shadow:
-                0 2px 8px rgba(0, 0, 0, 0.10);
-        }
-
-
-        .info h3 {
-            color: #1e293b;
-            margin-top: 0;
-        }
-
-
-        .info p {
-            line-height: 1.6;
-        }
-
+        /* =========================
+           FOOTER
+        ========================== */
 
         footer {
             margin-top: 30px;
@@ -127,15 +135,21 @@
         }
 
 
-        footer a {
-            color: #38bdf8;
-            text-decoration: none;
-            margin: 0 5px;
-        }
+        /* =========================
+           MOBILE
+        ========================== */
 
+        @media (max-width: 600px) {
 
-        footer a:hover {
-            text-decoration: underline;
+            .game-frame {
+                height: 350px;
+            }
+
+            .grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
         }
 
     </style>
@@ -146,15 +160,29 @@
 <body>
 
 
+    <!-- =========================
+         HEADER
+    ========================== -->
+
     <header>
         🎮 GameZone - Play Free Games!
     </header>
 
 
+
+    <!-- =========================
+         MAIN CONTAINER
+    ========================== -->
+
     <div class="container">
 
-        <h2>Master Gameplay</h2>
 
+        <h2>100+ Games</h2>
+
+
+        <!-- =========================
+             GAME PLAYER
+        ========================== -->
 
         <div class="game-frame">
 
@@ -168,73 +196,191 @@
         </div>
 
 
+
+        <!-- =========================
+             GAME GRID
+        ========================== -->
+
         <div class="grid">
 
-            <div class="card">
+
+            <div class="card"
+                 onclick="play(0)">
 
                 <img
-                    src="https://via.placeholder.com/400x200"
-                    alt="Game">
+                    src="https://via.placeholder.com/300x180"
+                    alt="Master Avengers">
 
-                <h3>Game 1</h3>
-
-                <p>
-                    Play this game now!
-                </p>
+                <p>Master Avengers</p>
 
             </div>
 
 
-            <div class="card">
+            <div class="card"
+                 onclick="play(1)">
 
                 <img
-                    src="https://via.placeholder.com/400x200"
-                    alt="Game">
+                    src="https://via.placeholder.com/300x180"
+                    alt="Subway Surfers">
 
-                <h3>Game 2</h3>
-
-                <p>
-                    Play this game now!
-                </p>
+                <p>Subway Surfers</p>
 
             </div>
 
 
-            <div class="card">
+            <div class="card"
+                 onclick="play(2)">
 
                 <img
-                    src="https://via.placeholder.com/400x200"
-                    alt="Game">
+                    src="https://via.placeholder.com/300x180"
+                    alt="Run 2">
 
-                <h3>Game 3</h3>
-
-                <p>
-                    Play this game now!
-                </p>
+                <p>Run 2</p>
 
             </div>
 
-        </div>
+
+            <div class="card"
+                 onclick="play(3)">
+
+                <img
+                    src="https://via.placeholder.com/300x180"
+                    alt="Bird">
+
+                <p>Bird</p>
+
+            </div>
 
 
-        <div class="info">
+            <div class="card"
+                 onclick="play(4)">
 
-            <h3>How to Play</h3>
+                <img
+                    src="https://via.placeholder.com/300x180"
+                    alt="Hill Climb Racing">
 
-            <p>
-                Choose a game and start playing.
-            </p>
+                <p>Hill Climb Racing</p>
 
-            <p>
-                Click or tap the game controls
-                to move your character and
-                complete the challenges.
-            </p>
+            </div>
+
+
+            <div class="card"
+                 onclick="play(5)">
+
+                <img
+                    src="https://via.placeholder.com/300x180"
+                    alt="The Rope">
+
+                <p>The Rope</p>
+
+            </div>
+
+
+            <div class="card"
+                 onclick="play(6)">
+
+                <img
+                    src="https://via.placeholder.com/300x180"
+                    alt="10">
+
+                <p>10</p>
+
+            </div>
+
+
+            <div class="card"
+                 onclick="play(7)">
+
+                <img
+                    src="https://via.placeholder.com/300x180"
+                    alt="Ninja">
+
+                <p>Ninja</p>
+
+            </div>
+
+
+            <div class="card"
+                 onclick="play(8)">
+
+                <img
+                    src="https://via.placeholder.com/300x180"
+                    alt="Pool">
+
+                <p>Pool</p>
+
+            </div>
+
+
+            <div class="card"
+                 onclick="play(9)">
+
+                <img
+                    src="https://via.placeholder.com/300x180"
+                    alt="Car Parking">
+
+                <p>Car Parking</p>
+
+            </div>
+
+
+            <div class="card"
+                 onclick="play(10)">
+
+                <img
+                    src="https://via.placeholder.com/300x180"
+                    alt="Traffic Racer">
+
+                <p>Traffic Racer</p>
+
+            </div>
+
+
+            <div class="card"
+                 onclick="play(11)">
+
+                <img
+                    src="https://via.placeholder.com/300x180"
+                    alt="2048">
+
+                <p>2048</p>
+
+            </div>
+
+
+            <div class="card"
+                 onclick="play(12)">
+
+                <img
+                    src="https://via.placeholder.com/300x180"
+                    alt="Snake and Ladders">
+
+                <p>Snake &amp; Ladders</p>
+
+            </div>
+
+
+            <div class="card"
+                 onclick="play(13)">
+
+                <img
+                    src="https://via.placeholder.com/300x180"
+                    alt="Bubble Shooter">
+
+                <p>Bubble Shooter</p>
+
+            </div>
+
 
         </div>
 
     </div>
 
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
 
     <footer>
 
@@ -243,12 +389,54 @@
         </p>
 
         <p>
-            <a href="#">Home</a> |
-            <a href="#">Privacy</a> |
+            <a href="#">Home</a>
+            |
+            <a href="#">Privacy</a>
+            |
             <a href="#">Contact Us</a>
         </p>
 
     </footer>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        function play(i) {
+
+            const games = [
+
+                "about:blank",
+                "about:blank",
+                "about:blank",
+                "about:blank",
+                "about:blank",
+                "about:blank",
+                "about:blank",
+                "about:blank",
+                "about:blank",
+                "about:blank",
+                "about:blank",
+                "about:blank",
+                "about:blank",
+                "about:blank"
+
+            ];
+
+            document.getElementById("player").src = games[i];
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+    </script>
 
 
 </body>
