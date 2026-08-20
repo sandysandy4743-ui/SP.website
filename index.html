@@ -1,568 +1,680 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>GameZone - 100 Free Games</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GameZone — 100 Games</title>
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background: #0b1020;
-    color: white;
-}
-
-/* HEADER */
-header {
-    padding: 25px 20px;
-    text-align: center;
-    background: linear-gradient(135deg, #111936, #18264d);
-    border-bottom: 2px solid #263766;
-}
-
-.logo-title {
-    font-size: 38px;
-    font-weight: 900;
-    letter-spacing: 1px;
-}
-
-.logo-title span {
-    color: #00e5ff;
-}
-
-.subtitle {
-    margin-top: 8px;
-    color: #aeb9d6;
-    font-size: 15px;
-}
-
-/* SEARCH */
-.search-area {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-#searchBox {
-    width: min(600px, 90%);
-    padding: 15px 20px;
-    border-radius: 30px;
-    border: 2px solid #334579;
-    outline: none;
-    background: #121a32;
-    color: white;
-    font-size: 16px;
-}
-
-#searchBox:focus {
-    border-color: #00e5ff;
-}
-
-/* CATEGORY BUTTONS */
-.categories {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 0 20px 25px;
-}
-
-.category-btn {
-    border: none;
-    padding: 10px 18px;
-    border-radius: 25px;
-    background: #1a2545;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.category-btn:hover,
-.category-btn.active {
-    background: #00bcd4;
-    color: #001016;
-}
-
-/* GAME GRID */
-.game-container {
-    width: min(1400px, 95%);
-    margin: auto;
-    padding: 10px 0 40px;
-
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 18px;
-}
-
-/* GAME CARD */
-.game-card {
-    background: #121a32;
-    border: 1px solid #27365f;
-    border-radius: 18px;
-    padding: 15px;
-    transition: 0.25s;
-    overflow: hidden;
-}
-
-.game-card:hover {
-    transform: translateY(-6px);
-    border-color: #00e5ff;
-    box-shadow: 0 10px 30px rgba(0, 229, 255, 0.12);
-}
-
-/* GAME LOGO */
-.game-logo {
-    width: 100%;
-    height: 150px;
-    border-radius: 14px;
-    overflow: hidden;
-    background: #202c4e;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-bottom: 12px;
-}
-
-.game-logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* GAME TEXT */
-.game-name {
-    font-size: 17px;
-    font-weight: 800;
-    margin-bottom: 6px;
-}
-
-.game-category {
-    color: #8e9abd;
-    font-size: 13px;
-    margin-bottom: 12px;
-}
-
-/* PLAY BUTTON */
-.play-btn {
-    width: 100%;
-    padding: 11px;
-    border: none;
-    border-radius: 10px;
-    background: #00c853;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 15px;
-}
-
-.play-btn:hover {
-    background: #00a844;
-}
-
-/* NO RESULT */
-.no-result {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 50px;
-    color: #aeb9d6;
-    font-size: 20px;
-}
-
-/* FOOTER */
-footer {
-    text-align: center;
-    padding: 25px;
-    background: #080d1b;
-    color: #7f8baa;
-}
-
-/* MOBILE */
-@media (max-width: 600px) {
-
-    .logo-title {
-        font-size: 28px;
-    }
-
-    .game-container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-    }
-
-    .game-logo {
-        height: 110px;
-    }
-
-    .game-name {
-        font-size: 14px;
-    }
-
-    .play-btn {
-        font-size: 13px;
-    }
-}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#080d18;color:#fff;min-height:100vh}
+header{padding:28px 18px;text-align:center;background:linear-gradient(135deg,#111a34,#152b4b);border-bottom:1px solid #2a416d}
+h1{font-size:clamp(28px,5vw,46px)} h1 span{color:#00e5ff}
+.subtitle{margin-top:8px;color:#aab8d4}
+.toolbar{width:min(1200px,94%);margin:20px auto;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+#search{flex:1 1 320px;max-width:650px;padding:14px 18px;border:1px solid #33486f;border-radius:30px;background:#10182b;color:#fff;outline:none;font-size:16px}
+#search:focus{border-color:#00e5ff}
+.filter{padding:11px 16px;border:0;border-radius:22px;background:#1a2743;color:#fff;cursor:pointer;font-weight:700}
+.filter.active,.filter:hover{background:#00cfe8;color:#001016}
+#count{width:min(1200px,94%);margin:0 auto 14px;color:#8fa0c0}
+.grid{width:min(1200px,94%);margin:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;padding-bottom:35px}
+.card{background:#10182b;border:1px solid #273b60;border-radius:16px;padding:12px;transition:.2s;overflow:hidden}
+.card:hover{transform:translateY(-4px);border-color:#00e5ff}
+.logo{height:145px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;position:relative}
+.logo .num{position:absolute;top:8px;left:9px;font-size:11px;font-weight:700;background:rgba(0,0,0,.35);padding:4px 7px;border-radius:10px}
+.logo .icon{font-size:58px;line-height:1}
+.logo .brand{font-size:13px;font-weight:800;margin-top:8px;text-shadow:0 1px 3px #000}
+.name{font-size:16px;font-weight:800;margin:11px 2px 5px}
+.cat{font-size:12px;color:#91a0bd;margin:0 2px 11px}
+.play{width:100%;border:0;border-radius:10px;padding:10px;background:#00c853;color:#fff;font-weight:800;cursor:pointer}
+.play:hover{background:#00a944}
+.empty{grid-column:1/-1;text-align:center;padding:50px;color:#9aa8c3}
+footer{padding:22px;text-align:center;color:#7585a4;background:#060a12}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:20px;z-index:10}
+.modal.show{display:flex}
+.dialog{width:min(480px,100%);background:#111a2d;border:1px solid #38527f;border-radius:18px;padding:24px;text-align:center}
+.dialog .big{font-size:64px}
+.dialog h2{margin:8px 0} .dialog p{color:#aebbd2;margin-bottom:18px}
+.close{border:0;border-radius:10px;padding:10px 18px;background:#00cfe8;color:#001016;font-weight:800;cursor:pointer}
+@media(max-width:520px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.logo{height:105px}.logo .icon{font-size:42px}.name{font-size:14px}}
 </style>
 </head>
-
 <body>
-
 <header>
-
-    <div class="logo-title">
-        🎮 Game<span>Zone</span>
-    </div>
-
-    <div class="subtitle">
-        100 Free Games • Play Online
-    </div>
-
+<h1>🎮 Game<span>Zone</span></h1>
+<p class="subtitle">100 Free Games • Search • Categories • Play</p>
 </header>
+<section class="toolbar">
+<input id="search" type="search" placeholder="🔍 Search a game..." autocomplete="off">
+<div id="filters"></div>
+</section>
+<div id="count"></div>
+<main id="grid" class="grid"></main>
+<footer>© 2026 GameZone • 100 Games</footer>
 
-
-<div class="search-area">
-
-    <input
-        type="text"
-        id="searchBox"
-        placeholder="🔍 Search games..."
-    >
-
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="dialog">
+    <div id="modalIcon" class="big">🎮</div>
+    <h2 id="modalTitle">Game</h2>
+    <p id="modalText">Game is ready.</p>
+    <button class="close" id="closeModal">Close</button>
+  </div>
 </div>
-
-
-<div class="categories">
-
-    <button class="category-btn active" onclick="filterCategory('All', this)">
-        All
-    </button>
-
-    <button class="category-btn" onclick="filterCategory('Action', this)">
-        Action
-    </button>
-
-    <button class="category-btn" onclick="filterCategory('Racing', this)">
-        Racing
-    </button>
-
-    <button class="category-btn" onclick="filterCategory('Puzzle', this)">
-        Puzzle
-    </button>
-
-    <button class="category-btn" onclick="filterCategory('Sports', this)">
-        Sports
-    </button>
-
-    <button class="category-btn" onclick="filterCategory('Arcade', this)">
-        Arcade
-    </button>
-
-</div>
-
-
-<main class="game-container" id="gameContainer"></main>
-
-
-<footer>
-    © 2026 GameZone • 100 Games
-</footer>
-
 
 <script>
-
-/* =========================================
-   100 GAMES
-========================================= */
+"use strict";
 
 const games = [
-
-    {name:"Subway Runner", category:"Arcade"},
-    {name:"Speed Racer", category:"Racing"},
-    {name:"Ninja Attack", category:"Action"},
-    {name:"Jungle Adventure", category:"Action"},
-    {name:"Space Shooter", category:"Action"},
-    {name:"Football Challenge", category:"Sports"},
-    {name:"Basketball Stars", category:"Sports"},
-    {name:"Car Drift", category:"Racing"},
-    {name:"Puzzle Master", category:"Puzzle"},
-    {name:"Block Blast", category:"Puzzle"},
-
-    {name:"Zombie Hunter", category:"Action"},
-    {name:"Monster Run", category:"Arcade"},
-    {name:"City Driver", category:"Racing"},
-    {name:"Bike Racing", category:"Racing"},
-    {name:"Super Soccer", category:"Sports"},
-    {name:"Tennis Pro", category:"Sports"},
-    {name:"Chess Master", category:"Puzzle"},
-    {name:"Candy Match", category:"Puzzle"},
-    {name:"Bubble Shooter", category:"Arcade"},
-    {name:"Alien Attack", category:"Action"},
-
-    {name:"Highway Racer", category:"Racing"},
-    {name:"Desert Race", category:"Racing"},
-    {name:"Snow Rider", category:"Racing"},
-    {name:"Street Driver", category:"Racing"},
-    {name:"Formula Speed", category:"Racing"},
-    {name:"Drift King", category:"Racing"},
-    {name:"Moto Speed", category:"Racing"},
-    {name:"Traffic Racer", category:"Racing"},
-    {name:"Rocket Race", category:"Racing"},
-    {name:"Offroad Driver", category:"Racing"},
-
-    {name:"Ninja Warrior", category:"Action"},
-    {name:"Samurai Fight", category:"Action"},
-    {name:"Robot Battle", category:"Action"},
-    {name:"Dinosaur Attack", category:"Action"},
-    {name:"Dragon Fighter", category:"Action"},
-    {name:"Pirate Battle", category:"Action"},
-    {name:"Space Warrior", category:"Action"},
-    {name:"Hero Quest", category:"Action"},
-    {name:"Monster Fighter", category:"Action"},
-    {name:"Battle Arena", category:"Action"},
-
-    {name:"Memory Match", category:"Puzzle"},
-    {name:"2048 Master", category:"Puzzle"},
-    {name:"Sudoku", category:"Puzzle"},
-    {name:"Word Puzzle", category:"Puzzle"},
-    {name:"Number Match", category:"Puzzle"},
-    {name:"Jigsaw Puzzle", category:"Puzzle"},
-    {name:"Color Match", category:"Puzzle"},
-    {name:"Maze Runner", category:"Puzzle"},
-    {name:"Brain Test", category:"Puzzle"},
-    {name:"Logic Master", category:"Puzzle"},
-
-    {name:"Penalty Shoot", category:"Sports"},
-    {name:"Cricket Pro", category:"Sports"},
-    {name:"Golf Challenge", category:"Sports"},
-    {name:"Baseball Hit", category:"Sports"},
-    {name:"Boxing Champion", category:"Sports"},
-    {name:"Hockey Stars", category:"Sports"},
-    {name:"Volleyball Pro", category:"Sports"},
-    {name:"Skateboard Hero", category:"Sports"},
-    {name:"Archery Master", category:"Sports"},
-    {name:"Bowling King", category:"Sports"},
-
-    {name:"Flappy Bird Style", category:"Arcade"},
-    {name:"Classic Snake", category:"Arcade"},
-    {name:"Brick Breaker", category:"Arcade"},
-    {name:"Space Invaders", category:"Arcade"},
-    {name:"Pac Runner", category:"Arcade"},
-    {name:"Jump Hero", category:"Arcade"},
-    {name:"Coin Collector", category:"Arcade"},
-    {name:"Fire Jump", category:"Arcade"},
-    {name:"Sky Runner", category:"Arcade"},
-    {name:"Tower Jump", category:"Arcade"},
-
-    {name:"Ocean Adventure", category:"Action"},
-    {name:"Island Survivor", category:"Action"},
-    {name:"Castle Defense", category:"Action"},
-    {name:"Tank Battle", category:"Action"},
-    {name:"Air Fighter", category:"Action"},
-    {name:"Laser Warrior", category:"Action"},
-    {name:"Cyber Hero", category:"Action"},
-    {name:"Robot Runner", category:"Action"},
-    {name:"Fire Dragon", category:"Action"},
-    {name:"Galaxy Battle", category:"Action"},
-
-    {name:"Color Blocks", category:"Puzzle"},
-    {name:"Match 3", category:"Puzzle"},
-    {name:"Tile Master", category:"Puzzle"},
-    {name:"Word Master", category:"Puzzle"},
-    {name:"Connect Dots", category:"Puzzle"},
-    {name:"Escape Room", category:"Puzzle"},
-    {name:"Find The Difference", category:"Puzzle"},
-    {name:"Brain Blocks", category:"Puzzle"},
-    {name:"Math Challenge", category:"Puzzle"},
-    {name:"Puzzle Quest", category:"Puzzle"},
-
-    {name:"Monster Truck", category:"Racing"},
-    {name:"F1 Racing", category:"Racing"},
-    {name:"Super Bike", category:"Racing"},
-    {name:"Police Chase", category:"Racing"},
-    {name:"Speed Boat", category:"Racing"},
-    {name:"Airport Race", category:"Racing"},
-    {name:"Stunt Car", category:"Racing"},
-    {name:"Mega Drift", category:"Racing"},
-    {name:"Road Fury", category:"Racing"},
-    {name:"Ultimate Racer", category:"Racing"}
-
+  {
+    "name": "Subway Runner",
+    "category": "Arcade",
+    "icon": "🏃"
+  },
+  {
+    "name": "Speed Racer",
+    "category": "Racing",
+    "icon": "🏎️"
+  },
+  {
+    "name": "Ninja Attack",
+    "category": "Action",
+    "icon": "🥷"
+  },
+  {
+    "name": "Jungle Adventure",
+    "category": "Adventure",
+    "icon": "🌴"
+  },
+  {
+    "name": "Space Shooter",
+    "category": "Action",
+    "icon": "🚀"
+  },
+  {
+    "name": "Football Challenge",
+    "category": "Sports",
+    "icon": "⚽"
+  },
+  {
+    "name": "Basketball Stars",
+    "category": "Sports",
+    "icon": "🏀"
+  },
+  {
+    "name": "Car Drift",
+    "category": "Racing",
+    "icon": "🚘"
+  },
+  {
+    "name": "Puzzle Master",
+    "category": "Puzzle",
+    "icon": "🧩"
+  },
+  {
+    "name": "Block Blast",
+    "category": "Puzzle",
+    "icon": "🧱"
+  },
+  {
+    "name": "Zombie Hunter",
+    "category": "Action",
+    "icon": "🧟"
+  },
+  {
+    "name": "Monster Run",
+    "category": "Arcade",
+    "icon": "👹"
+  },
+  {
+    "name": "City Driver",
+    "category": "Racing",
+    "icon": "🚕"
+  },
+  {
+    "name": "Bike Racing",
+    "category": "Racing",
+    "icon": "🏍️"
+  },
+  {
+    "name": "Super Soccer",
+    "category": "Sports",
+    "icon": "⚽"
+  },
+  {
+    "name": "Tennis Pro",
+    "category": "Sports",
+    "icon": "🎾"
+  },
+  {
+    "name": "Chess Master",
+    "category": "Puzzle",
+    "icon": "♟️"
+  },
+  {
+    "name": "Candy Match",
+    "category": "Puzzle",
+    "icon": "🍬"
+  },
+  {
+    "name": "Bubble Shooter",
+    "category": "Arcade",
+    "icon": "🫧"
+  },
+  {
+    "name": "Alien Attack",
+    "category": "Action",
+    "icon": "👽"
+  },
+  {
+    "name": "Highway Racer",
+    "category": "Racing",
+    "icon": "🛣️"
+  },
+  {
+    "name": "Desert Race",
+    "category": "Racing",
+    "icon": "🏜️"
+  },
+  {
+    "name": "Snow Rider",
+    "category": "Racing",
+    "icon": "❄️"
+  },
+  {
+    "name": "Street Driver",
+    "category": "Racing",
+    "icon": "🚗"
+  },
+  {
+    "name": "Formula Speed",
+    "category": "Racing",
+    "icon": "🏁"
+  },
+  {
+    "name": "Drift King",
+    "category": "Racing",
+    "icon": "🏎️"
+  },
+  {
+    "name": "Moto Speed",
+    "category": "Racing",
+    "icon": "🏍️"
+  },
+  {
+    "name": "Traffic Racer",
+    "category": "Racing",
+    "icon": "🚦"
+  },
+  {
+    "name": "Rocket Race",
+    "category": "Racing",
+    "icon": "🚀"
+  },
+  {
+    "name": "Offroad Driver",
+    "category": "Racing",
+    "icon": "🚙"
+  },
+  {
+    "name": "Ninja Warrior",
+    "category": "Action",
+    "icon": "🥷"
+  },
+  {
+    "name": "Samurai Fight",
+    "category": "Action",
+    "icon": "⚔️"
+  },
+  {
+    "name": "Robot Battle",
+    "category": "Action",
+    "icon": "🤖"
+  },
+  {
+    "name": "Dinosaur Attack",
+    "category": "Action",
+    "icon": "🦖"
+  },
+  {
+    "name": "Dragon Fighter",
+    "category": "Action",
+    "icon": "🐉"
+  },
+  {
+    "name": "Pirate Battle",
+    "category": "Action",
+    "icon": "🏴‍☠️"
+  },
+  {
+    "name": "Space Warrior",
+    "category": "Action",
+    "icon": "🧑‍🚀"
+  },
+  {
+    "name": "Hero Quest",
+    "category": "Adventure",
+    "icon": "🛡️"
+  },
+  {
+    "name": "Monster Fighter",
+    "category": "Action",
+    "icon": "👹"
+  },
+  {
+    "name": "Battle Arena",
+    "category": "Action",
+    "icon": "🥊"
+  },
+  {
+    "name": "Memory Match",
+    "category": "Puzzle",
+    "icon": "🧠"
+  },
+  {
+    "name": "2048 Master",
+    "category": "Puzzle",
+    "icon": "🔢"
+  },
+  {
+    "name": "Sudoku",
+    "category": "Puzzle",
+    "icon": "🔢"
+  },
+  {
+    "name": "Word Puzzle",
+    "category": "Puzzle",
+    "icon": "🔤"
+  },
+  {
+    "name": "Number Match",
+    "category": "Puzzle",
+    "icon": "➕"
+  },
+  {
+    "name": "Jigsaw Puzzle",
+    "category": "Puzzle",
+    "icon": "🧩"
+  },
+  {
+    "name": "Color Match",
+    "category": "Puzzle",
+    "icon": "🎨"
+  },
+  {
+    "name": "Maze Runner",
+    "category": "Puzzle",
+    "icon": "🌀"
+  },
+  {
+    "name": "Brain Test",
+    "category": "Puzzle",
+    "icon": "🧠"
+  },
+  {
+    "name": "Logic Master",
+    "category": "Puzzle",
+    "icon": "💡"
+  },
+  {
+    "name": "Penalty Shoot",
+    "category": "Sports",
+    "icon": "🥅"
+  },
+  {
+    "name": "Cricket Pro",
+    "category": "Sports",
+    "icon": "🏏"
+  },
+  {
+    "name": "Golf Challenge",
+    "category": "Sports",
+    "icon": "⛳"
+  },
+  {
+    "name": "Baseball Hit",
+    "category": "Sports",
+    "icon": "⚾"
+  },
+  {
+    "name": "Boxing Champion",
+    "category": "Sports",
+    "icon": "🥊"
+  },
+  {
+    "name": "Hockey Stars",
+    "category": "Sports",
+    "icon": "🏒"
+  },
+  {
+    "name": "Volleyball Pro",
+    "category": "Sports",
+    "icon": "🏐"
+  },
+  {
+    "name": "Skateboard Hero",
+    "category": "Sports",
+    "icon": "🛹"
+  },
+  {
+    "name": "Archery Master",
+    "category": "Sports",
+    "icon": "🏹"
+  },
+  {
+    "name": "Bowling King",
+    "category": "Sports",
+    "icon": "🎳"
+  },
+  {
+    "name": "Flappy Sky",
+    "category": "Arcade",
+    "icon": "🐦"
+  },
+  {
+    "name": "Classic Snake",
+    "category": "Arcade",
+    "icon": "🐍"
+  },
+  {
+    "name": "Brick Breaker",
+    "category": "Arcade",
+    "icon": "🧱"
+  },
+  {
+    "name": "Space Invaders",
+    "category": "Arcade",
+    "icon": "👾"
+  },
+  {
+    "name": "Pac Runner",
+    "category": "Arcade",
+    "icon": "🟡"
+  },
+  {
+    "name": "Jump Hero",
+    "category": "Arcade",
+    "icon": "🦸"
+  },
+  {
+    "name": "Coin Collector",
+    "category": "Arcade",
+    "icon": "🪙"
+  },
+  {
+    "name": "Fire Jump",
+    "category": "Arcade",
+    "icon": "🔥"
+  },
+  {
+    "name": "Sky Runner",
+    "category": "Arcade",
+    "icon": "☁️"
+  },
+  {
+    "name": "Tower Jump",
+    "category": "Arcade",
+    "icon": "🏰"
+  },
+  {
+    "name": "Ocean Adventure",
+    "category": "Adventure",
+    "icon": "🌊"
+  },
+  {
+    "name": "Island Survivor",
+    "category": "Adventure",
+    "icon": "🏝️"
+  },
+  {
+    "name": "Castle Defense",
+    "category": "Action",
+    "icon": "🏰"
+  },
+  {
+    "name": "Tank Battle",
+    "category": "Action",
+    "icon": "🪖"
+  },
+  {
+    "name": "Air Fighter",
+    "category": "Action",
+    "icon": "✈️"
+  },
+  {
+    "name": "Laser Warrior",
+    "category": "Action",
+    "icon": "🔫"
+  },
+  {
+    "name": "Cyber Hero",
+    "category": "Action",
+    "icon": "💻"
+  },
+  {
+    "name": "Robot Runner",
+    "category": "Action",
+    "icon": "🤖"
+  },
+  {
+    "name": "Fire Dragon",
+    "category": "Action",
+    "icon": "🐲"
+  },
+  {
+    "name": "Galaxy Battle",
+    "category": "Action",
+    "icon": "🌌"
+  },
+  {
+    "name": "Color Blocks",
+    "category": "Puzzle",
+    "icon": "🟦"
+  },
+  {
+    "name": "Match 3",
+    "category": "Puzzle",
+    "icon": "3️⃣"
+  },
+  {
+    "name": "Tile Master",
+    "category": "Puzzle",
+    "icon": "🔳"
+  },
+  {
+    "name": "Word Master",
+    "category": "Puzzle",
+    "icon": "🔠"
+  },
+  {
+    "name": "Connect Dots",
+    "category": "Puzzle",
+    "icon": "🔵"
+  },
+  {
+    "name": "Escape Room",
+    "category": "Puzzle",
+    "icon": "🚪"
+  },
+  {
+    "name": "Find Difference",
+    "category": "Puzzle",
+    "icon": "🔎"
+  },
+  {
+    "name": "Brain Blocks",
+    "category": "Puzzle",
+    "icon": "🧠"
+  },
+  {
+    "name": "Math Challenge",
+    "category": "Puzzle",
+    "icon": "➗"
+  },
+  {
+    "name": "Puzzle Quest",
+    "category": "Puzzle",
+    "icon": "🗺️"
+  },
+  {
+    "name": "Monster Truck",
+    "category": "Racing",
+    "icon": "🚛"
+  },
+  {
+    "name": "F1 Racing",
+    "category": "Racing",
+    "icon": "🏁"
+  },
+  {
+    "name": "Super Bike",
+    "category": "Racing",
+    "icon": "🏍️"
+  },
+  {
+    "name": "Police Chase",
+    "category": "Racing",
+    "icon": "🚓"
+  },
+  {
+    "name": "Speed Boat",
+    "category": "Racing",
+    "icon": "🚤"
+  },
+  {
+    "name": "Airport Race",
+    "category": "Racing",
+    "icon": "✈️"
+  },
+  {
+    "name": "Stunt Car",
+    "category": "Racing",
+    "icon": "🚗"
+  },
+  {
+    "name": "Mega Drift",
+    "category": "Racing",
+    "icon": "💨"
+  },
+  {
+    "name": "Road Fury",
+    "category": "Racing",
+    "icon": "🛣️"
+  },
+  {
+    "name": "Ultimate Racer",
+    "category": "Racing",
+    "icon": "🏆"
+  }
 ];
 
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+const filters = document.getElementById("filters");
+const count = document.getElementById("count");
+const modal = document.getElementById("modal");
+const modalIcon = document.getElementById("modalIcon");
+const modalTitle = document.getElementById("modalTitle");
+const modalText = document.getElementById("modalText");
 
-/* =========================================
-   GAME LOGO
-========================================= */
+const categoryColors = {
+  Action: ["#ff512f","#dd2476"],
+  Racing: ["#11998e","#38ef7d"],
+  Puzzle: ["#4776e6","#8e54e9"],
+  Sports: ["#f7971e","#ffd200"],
+  Arcade: ["#00c6ff","#0072ff"],
+  Adventure: ["#56ab2f","#a8e063"]
+};
 
-function getLogo(game, index) {
+const categories = ["All", ...new Set(games.map(game => game.category))];
 
-    /*
-       ஒவ்வொரு game-க்கும் தனி generated logo.
-       Game name + index பயன்படுத்தப்படுகிறது.
-    */
-
-    const seed = encodeURIComponent(
-        game.name + "-" + index
-    );
-
-    return `https://api.dicebear.com/9.x/initials/svg?seed=${seed}&backgroundType=gradientLinear`;
+function makeLogo(game, index) {
+  const pair = categoryColors[game.category] || ["#434343","#000000"];
+  return `
+    <div class="logo" style="background:linear-gradient(135deg,${pair[0]},${pair[1]})">
+      <span class="num">GAME ${index + 1}</span>
+      <span class="icon">${game.icon}</span>
+      <span class="brand">${escapeHtml(game.name)}</span>
+    </div>`;
 }
 
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[char]));
+}
 
-/* =========================================
-   DISPLAY GAMES
-========================================= */
-
-function displayGames(list) {
-
-    const container =
-        document.getElementById("gameContainer");
-
-    container.innerHTML = "";
-
-    if (list.length === 0) {
-
-        container.innerHTML = `
-            <div class="no-result">
-                😔 Game கிடைக்கவில்லை
-            </div>
-        `;
-
-        return;
-    }
-
-    list.forEach((game, index) => {
-
-        const card =
-            document.createElement("div");
-
-        card.className = "game-card";
-
-        card.innerHTML = `
-
-            <div class="game-logo">
-
-                <img
-                    src="${getLogo(game, index)}"
-                    alt="${game.name} logo"
-                    loading="lazy"
-                >
-
-            </div>
-
-            <div class="game-name">
-                ${game.name}
-            </div>
-
-            <div class="game-category">
-                ${game.category}
-            </div>
-
-            <button
-                class="play-btn"
-                onclick="playGame('${game.name.replace(/'/g, "\\'")}')"
-            >
-                ▶ Play Now
-            </button>
-
-        `;
-
-        container.appendChild(card);
-
+function renderFilters(active = "All") {
+  filters.innerHTML = "";
+  categories.forEach(category => {
+    const button = document.createElement("button");
+    button.className = "filter" + (category === active ? " active" : "");
+    button.textContent = category;
+    button.type = "button";
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".filter").forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+      renderGames(category);
     });
-
+    filters.appendChild(button);
+  });
 }
 
+function renderGames(category = "All") {
+  const query = search.value.trim().toLowerCase();
+  const result = games.filter(game => {
+    const categoryOk = category === "All" || game.category === category;
+    const searchOk = game.name.toLowerCase().includes(query);
+    return categoryOk && searchOk;
+  });
 
-/* =========================================
-   SEARCH
-========================================= */
+  count.textContent = `Showing ${result.length} of ${games.length} games`;
+  grid.innerHTML = "";
 
-document
-.getElementById("searchBox")
-.addEventListener("input", function() {
+  if (!result.length) {
+    grid.innerHTML = '<div class="empty">😔 No games found.</div>';
+    return;
+  }
 
-    const searchText =
-        this.value.toLowerCase().trim();
+  result.forEach(game => {
+    const index = games.indexOf(game);
+    const card = document.createElement("article");
+    card.className = "card";
+    card.innerHTML = `
+      ${makeLogo(game, index)}
+      <div class="name">${escapeHtml(game.name)}</div>
+      <div class="cat">${escapeHtml(game.category)}</div>
+      <button class="play" type="button">▶ Play Now</button>
+    `;
+    card.querySelector(".play").addEventListener("click", () => openGame(game));
+    grid.appendChild(card);
+  });
+}
 
-    const filtered =
-        games.filter(game =>
-            game.name
-                .toLowerCase()
-                .includes(searchText)
-        );
+function openGame(game) {
+  modalIcon.textContent = game.icon;
+  modalTitle.textContent = game.name;
+  modalText.textContent = `${game.name} is selected. Add its real game URL/file inside openGame() when you have the game.`;
+  modal.classList.add("show");
+}
 
-    displayGames(filtered);
+function closeGame() {
+  modal.classList.remove("show");
+}
 
+search.addEventListener("input", () => {
+  const active = document.querySelector(".filter.active");
+  renderGames(active ? active.textContent : "All");
 });
 
+document.getElementById("closeModal").addEventListener("click", closeGame);
+modal.addEventListener("click", event => {
+  if (event.target === modal) closeGame();
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeGame();
+});
 
-/* =========================================
-   CATEGORY FILTER
-========================================= */
-
-function filterCategory(category, button) {
-
-    document
-    .querySelectorAll(".category-btn")
-    .forEach(btn => {
-        btn.classList.remove("active");
-    });
-
-    button.classList.add("active");
-
-    if (category === "All") {
-
-        displayGames(games);
-
-        return;
-    }
-
-    const filtered =
-        games.filter(game =>
-            game.category === category
-        );
-
-    displayGames(filtered);
-}
-
-
-/* =========================================
-   PLAY BUTTON
-========================================= */
-
-function playGame(gameName) {
-
-    /*
-       இங்கே ஒவ்வொரு game-க்கும்
-       தனித்தனி HTML game URL / game file
-       சேர்க்கலாம்.
-    */
-
-    alert(
-        "🎮 " +
-        gameName +
-        "\\n\\nGame loading..."
-    );
-
-}
-
-
-/* =========================================
-   START
-========================================= */
-
-displayGames(games);
-
+renderFilters();
+renderGames();
 </script>
-
 </body>
 </html>
